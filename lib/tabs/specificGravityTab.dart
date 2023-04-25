@@ -1,4 +1,3 @@
-
 import 'package:data_entry_app/models/RelProfileTabsFieldsModal.dart';
 import 'package:data_entry_app/models/SpecificGravityModel.dart';
 
@@ -548,94 +547,98 @@ class SpecificGravityState extends State<SpecificGravityTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 600,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'Depth',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 600,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'Depth',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Length',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Length',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Weight Dry Air',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Weight Dry Air',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Weight Water',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Weight Water',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Weight Water Sealed',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Weight Water Sealed',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Final Weight No Sealed',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Final Weight No Sealed',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Chk1',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Chk1',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Specific Gravity 1',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Specific Gravity 1',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Vol 1',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Vol 1',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Vol 2',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Vol 2',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'DifVol',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'DifVol',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Specific Gravity 2',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Specific Gravity 2',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Comments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Comments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          )
         ],
       ),
     );
@@ -743,7 +746,8 @@ class SpecificGravityState extends State<SpecificGravityTab> {
       'Length': double.tryParse(_LengthCtrl.text.toString()),
       'WeightDryAir': double.tryParse(_WeightDryAirCtrl.text.toString()),
       'WeightWater': double.tryParse(_WeightWaterCtrl.text.toString()),
-      'WeigthWaterSealed': double.tryParse(_WeightWaterSealedCtrl.text.toString()),
+      'WeigthWaterSealed':
+          double.tryParse(_WeightWaterSealedCtrl.text.toString()),
       'FinalWeightNoSealed': _FinalWeightNoSealedCtrl.text.toString(),
       'Chk1': _Chk1Ctrl.text.toString(),
       'SpecificGravity_1': _SpecificGravity_1Ctrl.text.toString(),
@@ -877,8 +881,8 @@ class SpecificGravityState extends State<SpecificGravityTab> {
 
   Future<dynamic> validateRequired(Map<String, Object?> valores) async {
     errors = '';
-    int? vol1 = int.tryParse(valores['Vol_1'].toString())??0;
-    int? vol2 = int.tryParse(valores['Vol_2'].toString())??0;
+    int? vol1 = int.tryParse(valores['Vol_1'].toString()) ?? 0;
+    int? vol2 = int.tryParse(valores['Vol_2'].toString()) ?? 0;
     if (valores['Vol_1'] != null) {
       if (vol1 > vol2) {
         Loader.hide();
@@ -888,7 +892,8 @@ class SpecificGravityState extends State<SpecificGravityTab> {
       }
     }
 
-    if (double.tryParse(valores['WeightDryAir'].toString())! > double.parse(valores['WeightWater'].toString())) {
+    if (double.tryParse(valores['WeightDryAir'].toString())! >
+        double.parse(valores['WeightWater'].toString())) {
       Loader.hide();
       message(CoolAlertType.error, 'Incorrect data',
           'The WeightDryAir cannot be gratter than WeightWater');

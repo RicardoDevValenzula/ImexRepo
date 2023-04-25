@@ -1,4 +1,3 @@
-
 import 'package:cool_alert/cool_alert.dart';
 import 'package:data_entry_app/controllers/BackgroundController.dart';
 import 'package:data_entry_app/controllers/CollarController.dart';
@@ -119,8 +118,7 @@ class _SincroCollarsPageState extends State<SincroCollarsPage> {
                                 },
                               )
                             : errorWidget(
-                                context: context,
-                                mensaje: "No results found.")),
+                                context: context, mensaje: "No results f.")),
                       ),
                     ],
                   ),

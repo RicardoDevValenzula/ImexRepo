@@ -78,8 +78,6 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
   bool geolFromDifference = false;
   bool geolToDifference = false;
 
-
-
   final List<Map<String, dynamic>> _items_AlterationType = [
     {
       'value': '1',
@@ -130,9 +128,12 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
         _itemsMetallurgicalType = rows;
       });
     });
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -223,7 +224,11 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
                             ),
                             onChanged: (text) {
                               geolFromDifference = false;
-                              if (isNumeric(_controllerGeolFrom.text) &&_lastGeolTo != 0.0 &&_lastGeolTo !=double.tryParse(_controllerGeolFrom.text)) {
+                              if (isNumeric(_controllerGeolFrom.text) &&
+                                  _lastGeolTo != 0.0 &&
+                                  _lastGeolTo !=
+                                      double.tryParse(
+                                          _controllerGeolFrom.text)) {
                                 geolFromDifference = true;
                               }
                               setState(() {});
@@ -477,10 +482,12 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton.icon(
-                    onPressed: candado ? null : () async {
-                      await insertLithology();
-                      setState(() {});
-                    },
+                    onPressed: candado
+                        ? null
+                        : () async {
+                            await insertLithology();
+                            setState(() {});
+                          },
                     style: ElevatedButton.styleFrom(
                         primary: DataEntryTheme.deOrangeDark,
                         alignment: Alignment.center),
@@ -553,90 +560,94 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 3000,
-              columns: [
-                DataColumn2(
-                  label: Text('GeolFrom'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('GeolTo'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Comments'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Alteration_Type1'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType1_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType1_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Alteration_Type2'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType2_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType2_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Alteration_Type3'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType3_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType3_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Alteration_Type4'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType4_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType4_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Alteration_Type5'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType5_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltType5_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Metallurgical_Type'),
-                  size: ColumnSize.L,
-                ),
-              ],
-              rows: _cells),
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 3000,
+                columns: [
+                  DataColumn2(
+                    label: Text('GeolFrom'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('GeolTo'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Comments'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Alteration_Type1'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType1_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType1_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Alteration_Type2'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType2_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType2_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Alteration_Type3'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType3_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType3_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Alteration_Type4'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType4_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType4_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Alteration_Type5'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType5_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltType5_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Metallurgical_Type'),
+                    size: ColumnSize.L,
+                  ),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -777,12 +788,9 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
         type: CoolAlertType.success,
         title: "Success!",
         text: 'Alteration Type data has been updated successfully',
-
       );
     }
   }
-
-
 
   Future<void> insertLithology() async {
     FocusScope.of(context).unfocus();
@@ -840,8 +848,6 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
       _controllerGeolTo.clear();
       _selectedAlterationType = '1';
       _key.currentState?.reset();
-
-
 
       CoolAlert.show(
         context: context,
@@ -1067,13 +1073,20 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
             .then((value) => value);
     listAlterationTypeModel.forEach((model) {
       Color cell_color = Colors.black;
-      currentRow ++;
-      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo || double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
-        if(currentRow==1 && double.parse(model.geolFrom.toStringAsFixed(3)) == 0){cell_color = Colors.black;}else{cell_color = Colors.red;}
+      currentRow++;
+      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo ||
+          double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
+        if (currentRow == 1 &&
+            double.parse(model.geolFrom.toStringAsFixed(3)) == 0) {
+          cell_color = Colors.black;
+        } else {
+          cell_color = Colors.red;
+        }
       }
       _cells.add(DataRow(
         cells: [
-          DataCell(Text('${model.geolFrom.toStringAsFixed(3)}', style: TextStyle(color: cell_color))),
+          DataCell(Text('${model.geolFrom.toStringAsFixed(3)}',
+              style: TextStyle(color: cell_color))),
           DataCell(Text('${model.geolTo.toStringAsFixed(3)}')),
           DataCell(Text('${model.comments}')),
           DataCell(Text('${model.alterationType1Name}')),
@@ -1093,9 +1106,11 @@ class AlterationTypeTabState extends State<AlterationTypeTab> {
           DataCell(Text('${model.altType5StyleName}')),
           DataCell(Text('${model.metallurgicalTypeName}')),
         ],
-        onSelectChanged:candado?null: (newValue) {
-          _getSelectedRowInfo(model);
-        },
+        onSelectChanged: candado
+            ? null
+            : (newValue) {
+                _getSelectedRowInfo(model);
+              },
       ));
       //_lastGeolFrom = double.parse(model.geolFrom.toString());
       _lastGeolTo = double.parse(model.geolTo.toString());

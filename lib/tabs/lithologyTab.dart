@@ -659,137 +659,141 @@ class LithologyTabState extends State<LithologyTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 5000,
-              columns: [
-                DataColumn2(
-                  label: Text('GeolFrom'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('GeolTo'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Geology_Comments'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lithology_Local'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('LithContact'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith1Abund'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith1Spec'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith1Mod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith1ColorMod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith1Color'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith2Abund'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith2Spec'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith2Mod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith2ColorMod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith2Color'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith3Abund'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith3Spec'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith3Mod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith3ColorMod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith3Color'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith4Abund'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith4Spec'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith4Mod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith4ColorMod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith4Color'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith5Abund'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith5Spec'),
-                ),
-                DataColumn2(
-                  label: Text('Lith5Mod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith5ColorMod'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Lith5Color'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('LithCategory'),
-                  size: ColumnSize.L,
-                ),
-              ],
-              rows: _cells),
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 5000,
+                columns: [
+                  DataColumn2(
+                    label: Text('GeolFrom'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('GeolTo'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Geology_Comments'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lithology_Local'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('LithContact'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith1Abund'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith1Spec'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith1Mod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith1ColorMod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith1Color'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith2Abund'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith2Spec'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith2Mod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith2ColorMod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith2Color'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith3Abund'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith3Spec'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith3Mod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith3ColorMod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith3Color'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith4Abund'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith4Spec'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith4Mod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith4ColorMod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith4Color'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith5Abund'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith5Spec'),
+                  ),
+                  DataColumn2(
+                    label: Text('Lith5Mod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith5ColorMod'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Lith5Color'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('LithCategory'),
+                    size: ColumnSize.L,
+                  ),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -1645,7 +1649,6 @@ class LithologyTabState extends State<LithologyTab> {
                           String lith5Abund =
                               rows.values.elementAt(28).toString();
 
-
                           _controllerGeolFrom.text =
                               rows.values.elementAt(2).toString();
                           _controllerGeolTo.text =
@@ -1658,8 +1661,8 @@ class LithologyTabState extends State<LithologyTab> {
                               rows.values.elementAt(7).toString();
 
                           if (isNumeric(rows.values.elementAt(8).toString()) &&
-                              (rows.values.elementAt(8).toString()) !=
-                                  "103" && (rows.values.elementAt(8).toString()) != "0") {
+                              (rows.values.elementAt(8).toString()) != "103" &&
+                              (rows.values.elementAt(8).toString()) != "0") {
                             _controllerLith1Abund.text =
                                 (int.parse(lith1Abund) - 2).toString();
                           } else {
@@ -1676,8 +1679,8 @@ class LithologyTabState extends State<LithologyTab> {
 
                           //_controllerLith2Abund.text = rows.values.elementAt(13).toString();
                           if (isNumeric(rows.values.elementAt(13).toString()) &&
-                              (rows.values.elementAt(13).toString()) !=
-                                  "103" && (rows.values.elementAt(13).toString()) != "0") {
+                              (rows.values.elementAt(13).toString()) != "103" &&
+                              (rows.values.elementAt(13).toString()) != "0") {
                             _controllerLith2Abund.text =
                                 (int.parse(lith2Abund) - 2).toString();
                           } else {
@@ -1694,8 +1697,8 @@ class LithologyTabState extends State<LithologyTab> {
 
                           ////
                           if (isNumeric(rows.values.elementAt(18).toString()) &&
-                              (rows.values.elementAt(18).toString()) !=
-                                  "103" && (rows.values.elementAt(18).toString()) != "0") {
+                              (rows.values.elementAt(18).toString()) != "103" &&
+                              (rows.values.elementAt(18).toString()) != "0") {
                             _controllerLith3Abund.text =
                                 (int.parse(lith3Abund) - 2).toString();
                           } else {
@@ -1712,8 +1715,8 @@ class LithologyTabState extends State<LithologyTab> {
 
                           //////
                           if (isNumeric(rows.values.elementAt(23).toString()) &&
-                              (rows.values.elementAt(23).toString()) !=
-                                  "103" && (rows.values.elementAt(23).toString()) != "0") {
+                              (rows.values.elementAt(23).toString()) != "103" &&
+                              (rows.values.elementAt(23).toString()) != "0") {
                             _controllerLith4Abund.text =
                                 (int.parse(lith4Abund) - 2).toString();
                           } else {
@@ -1729,7 +1732,9 @@ class LithologyTabState extends State<LithologyTab> {
                               rows.values.elementAt(27).toString();
 
                           //////
-                          if (isNumeric(rows.values.elementAt(28).toString()) && (rows.values.elementAt(28).toString()) != "103" && (rows.values.elementAt(28).toString()) != "0") {
+                          if (isNumeric(rows.values.elementAt(28).toString()) &&
+                              (rows.values.elementAt(28).toString()) != "103" &&
+                              (rows.values.elementAt(28).toString()) != "0") {
                             _controllerLith5Abund.text =
                                 (int.parse(lith5Abund) - 2).toString();
                           } else {

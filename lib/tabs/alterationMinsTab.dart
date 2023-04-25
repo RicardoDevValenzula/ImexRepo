@@ -1,4 +1,3 @@
-
 import 'package:data_entry_app/controllers/DBDataEntry.dart';
 import 'package:data_entry_app/models/AlterationMinsModel.dart';
 import 'package:data_entry_app/models/RelProfileTabsFieldsModal.dart';
@@ -60,7 +59,6 @@ class AlterationMinsTabState extends State<AlterationMinsTab> {
   String _valueChanged = '';
 
   double _lastGeolTo = 0.0;
-
 
   String _selectedAlterationMin = '0';
 
@@ -321,46 +319,50 @@ class AlterationMinsTabState extends State<AlterationMinsTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 1500,
-              columns: [
-                DataColumn2(
-                  label: Text('GeolFrom'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('GeolTo'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltMineral1'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltMinera1_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltMineral2'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltMinera2_Intensity'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltMineral3'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('AltMinera3_Intensity'),
-                  size: ColumnSize.L,
-                ),
-              ],
-              rows: _cells),
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 1500,
+                columns: [
+                  DataColumn2(
+                    label: Text('GeolFrom'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('GeolTo'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltMineral1'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltMinera1_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltMineral2'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltMinera2_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltMineral3'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('AltMinera3_Intensity'),
+                    size: ColumnSize.L,
+                  ),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -700,15 +702,22 @@ class AlterationMinsTabState extends State<AlterationMinsTab> {
             .then((value) => value);
     listLithologyModel.forEach(
       (model) {
-         Color cell_color = Colors.black;
-        currentRow ++;
-      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo || double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
-        if(currentRow==1 && double.parse(model.geolFrom.toStringAsFixed(3)) == 0){cell_color = Colors.black;}else{cell_color = Colors.red;}
-      }
+        Color cell_color = Colors.black;
+        currentRow++;
+        if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo ||
+            double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
+          if (currentRow == 1 &&
+              double.parse(model.geolFrom.toStringAsFixed(3)) == 0) {
+            cell_color = Colors.black;
+          } else {
+            cell_color = Colors.red;
+          }
+        }
         _cells.add(
           DataRow(
             cells: [
-              DataCell(Text('${model.geolFrom}', style: TextStyle(color: cell_color))),
+              DataCell(Text('${model.geolFrom}',
+                  style: TextStyle(color: cell_color))),
               DataCell(Text('${model.geolTo}')),
               DataCell(Text('${model.altMineral1Name}')),
               DataCell(Text('${model.altMin1IntensityName}')),
@@ -728,9 +737,7 @@ class AlterationMinsTabState extends State<AlterationMinsTab> {
           _controllerGeolFrom.text = _geolTo.toString();
         }
       },
-      
     );
-    
 
     setState(() {});
   }

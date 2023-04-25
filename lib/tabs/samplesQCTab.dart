@@ -13,25 +13,22 @@ import 'package:data_entry_app/themes/dataEntryTheme.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:select_form_field/select_form_field.dart';
 
-
-class SamplesQCTab extends StatefulWidget{
+class SamplesQCTab extends StatefulWidget {
   final ValueChanged<bool> pageEvent;
   final int holeId;
   final double totalDepth;
   SamplesQCTab(
       {Key? key,
-        required this.pageEvent,
-        required this.holeId,
-        required this.totalDepth}
-      )
+      required this.pageEvent,
+      required this.holeId,
+      required this.totalDepth})
       : super(key: key);
 
   @override
   SamplesQCTabState createState() => SamplesQCTabState(pageEvent: pageEvent);
-
 }
 
-class SamplesQCTabState extends State<SamplesQCTab>{
+class SamplesQCTabState extends State<SamplesQCTab> {
   final ValueChanged<bool> pageEvent;
   SamplesQCTabState({required this.pageEvent});
 
@@ -49,49 +46,55 @@ class SamplesQCTabState extends State<SamplesQCTab>{
   bool candado = false;
 
   //Arreglos para llenar con datos extraidos de la base de datos.
-  late List <Map<String, dynamic>> _itemsLab=[];
-  late List <Map<String, dynamic>> _itemsQCType=[];
-  late List <Map<String, dynamic>> _itemsStandardId=[];
+  late List<Map<String, dynamic>> _itemsLab = [];
+  late List<Map<String, dynamic>> _itemsQCType = [];
+  late List<Map<String, dynamic>> _itemsStandardId = [];
   String errors = "";
 
   final List<Map<String, dynamic>> _items = [];
   String _initial_item_field = '';
   String _valueChanged = '';
 
-  List<DataRow> _cells=[];
-  bool onUpdate=false;
+  List<DataRow> _cells = [];
+  bool onUpdate = false;
   bool ocultaStandard = false;
   bool ocultaSample = false;
-  int selectedRow=0;
+  int selectedRow = 0;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    _db.fnRegistrosValueLabelIcon(tbName:
-    'cat_lab', orderByCampo: 'repetitions')
-    .then((rows){
+    _db
+        .fnRegistrosValueLabelIcon(
+            tbName: 'cat_lab', orderByCampo: 'repetitions')
+        .then((rows) {
       setState(() {
         _itemsLab = rows;
       });
     });
-    _db.fnRegistrosValueLabelIcon(tbName:
-    'cat_qctype', orderByCampo: 'repetitions')
+    _db
+        .fnRegistrosValueLabelIcon(
+            tbName: 'cat_qctype', orderByCampo: 'repetitions')
         .then((rows) {
-          setState(() {
-            _itemsQCType = rows;
-        });
-     });
-    _db.fnRegistrosValueLabelIcon3(tbName:
-    'cat_standarid', holeid: widget.holeId)
-    .then((rows) {
+      setState(() {
+        _itemsQCType = rows;
+      });
+    });
+    _db
+        .fnRegistrosValueLabelIcon3(
+            tbName: 'cat_standarid', holeid: widget.holeId)
+        .then((rows) {
       setState(() {
         _itemsStandardId = rows;
       });
     });
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -100,224 +103,244 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     fnLlenarSamplesQC(widget.holeId);
   }
 
- @override
-  Widget build(BuildContext context){
-   return SingleChildScrollView(
-     child: Column(
-       children: [
-         Text('Samples QC Tab',
-           style: TextStyle(
-             fontSize: 18,
-           ),
-         ),
-         Divider(),
-         SizedBox(
-           height: 20,
-         ),
-         ( _items.any( (element) => element.values.contains('QCTYPE'))) ? sFM(_controllerQCType, _itemsQCType, 'QCTYPE') : labelInput(''),
-         SizedBox(
-           height: 20,
-         ),
-         labelInput('CHECK ID'),
-         Container(
-               child: SizedBox(
-                 height: 50,
-                 child: TextField(
-                     controller: _controllerCheckId,
-                     keyboardType: TextInputType.numberWithOptions(decimal: true),
-                     style: TextStyle(fontSize: 16.0,),
-                     decoration: InputDecoration(
-                     contentPadding: EdgeInsets.only(
-                       left: 14.0,
-                       right: 14.0,
-                       top: 14.0,
-                       bottom: 14.0),
-                     prefixIcon: Icon(Icons.label_important),
-                     filled: true,
-                     hintStyle: TextStyle(color: Colors.grey[800]),
-                     hintText: "CHECKID",
-                     focusedBorder: OutlineInputBorder(
-                       borderSide: BorderSide(
-                         color: Colors.grey.withOpacity(0.3), width: 2.1),
-                       borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                     ),
-                     ),
-                   onChanged: (text) {}),
-                 ),
-               ),
-         SizedBox(
-           height: 10,
-         ),
-         if(ocultaSample)labelInput('SAMPLE ID'),
-         Visibility(
-           visible: (ocultaSample),
-           child: SizedBox(
-             height: 50,
-             child: TextField(
-               controller: _controllerSampleId,
-               keyboardType: TextInputType.numberWithOptions(decimal: true),
-               style: TextStyle(
-                 fontSize: 16
-               ),
-               decoration: InputDecoration(
-                 contentPadding: EdgeInsets.only(
-                   left: 14,
-                   right: 14,
-                   top: 14,
-                   bottom: 14,),
-                 prefixIcon: Icon(Icons.label_important),
-                 filled: true,
-                 hintStyle: TextStyle(color: Colors.grey[800]),
-                 hintText: 'SAMPLEID',
-                 focusedBorder: OutlineInputBorder(
-                   borderSide: BorderSide(
-                     color: Colors.grey.withOpacity(0.3), width: 2.1),
-                   borderRadius: BorderRadius.all(Radius.circular(100.0))
-                 )
-               ),
-               onChanged: (text){}),
-           ),
-         ),
-         SizedBox(
-           height: 10,
-         ),
-         //labelInput('Standard ID'),
-         if(ocultaStandard)sFM(_controllerStandardId,_itemsStandardId,'Standard ID'),
-         SizedBox(
-           height: 10,
-         ),
-         ( _items.any( (element) => element.values.contains('Lab'))) ? sFM(_controllerLab,_itemsLab,'Lab') : labelInput(''),
-         SizedBox(
-           height: 10,
-         ),
-         Padding(
-           padding: const EdgeInsets.all(8.0),
-           child: Container(
-             child: Visibility(
-               visible: ( _items.any( (element) => element.values.contains('Comments'))) ? true : false,
-               child: BsInput(
-                 maxLines: null,
-                 minLines: 4,
-                 keyboardType: TextInputType.multiline,
-                 style: BsInputStyle.outline,
-                 size: BsInputSize.md,
-                 hintText: 'Comments',
-                 controller: _controllerComments,
-                 prefixIcon: Icons.comment,
-                 onChange: (text){
-                   setState(() {
-                     pageEvent(true);
-                   });
-                 },
-               ),
-             )
-           ),
-         ),
-         SizedBox(
-           height: 20,
-         ),
-           (!onUpdate)
-               ? SizedBox(
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        Text(
+          'Samples QC Tab',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        Divider(),
+        SizedBox(
+          height: 20,
+        ),
+        (_items.any((element) => element.values.contains('QCTYPE')))
+            ? sFM(_controllerQCType, _itemsQCType, 'QCTYPE')
+            : labelInput(''),
+        SizedBox(
+          height: 20,
+        ),
+        labelInput('CHECK ID'),
+        Container(
+          child: SizedBox(
+            height: 50,
+            child: TextField(
+                controller: _controllerCheckId,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.only(
+                      left: 14.0, right: 14.0, top: 14.0, bottom: 14.0),
+                  prefixIcon: Icon(Icons.label_important),
+                  filled: true,
+                  hintStyle: TextStyle(color: Colors.grey[800]),
+                  hintText: "CHECKID",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.grey.withOpacity(0.3), width: 2.1),
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                  ),
+                ),
+                onChanged: (text) {}),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        if (ocultaSample) labelInput('SAMPLE ID'),
+        Visibility(
+          visible: (ocultaSample),
+          child: SizedBox(
+            height: 50,
+            child: TextField(
+                controller: _controllerSampleId,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                style: TextStyle(fontSize: 16),
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(
+                      left: 14,
+                      right: 14,
+                      top: 14,
+                      bottom: 14,
+                    ),
+                    prefixIcon: Icon(Icons.label_important),
+                    filled: true,
+                    hintStyle: TextStyle(color: Colors.grey[800]),
+                    hintText: 'SAMPLEID',
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.3), width: 2.1),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(100.0)))),
+                onChanged: (text) {}),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        //labelInput('Standard ID'),
+        if (ocultaStandard)
+          sFM(_controllerStandardId, _itemsStandardId, 'Standard ID'),
+        SizedBox(
+          height: 10,
+        ),
+        (_items.any((element) => element.values.contains('Lab')))
+            ? sFM(_controllerLab, _itemsLab, 'Lab')
+            : labelInput(''),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              child: Visibility(
+            visible:
+                (_items.any((element) => element.values.contains('Comments')))
+                    ? true
+                    : false,
+            child: BsInput(
+              maxLines: null,
+              minLines: 4,
+              keyboardType: TextInputType.multiline,
+              style: BsInputStyle.outline,
+              size: BsInputSize.md,
+              hintText: 'Comments',
+              controller: _controllerComments,
+              prefixIcon: Icons.comment,
+              onChange: (text) {
+                setState(() {
+                  pageEvent(true);
+                });
+              },
+            ),
+          )),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        (!onUpdate)
+            ? SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ElevatedButton.icon(
-                onPressed:candado ? null : () async{
-                  await insertSamplesQC();
-                  setState(() {});
-                },
+                  onPressed: candado
+                      ? null
+                      : () async {
+                          await insertSamplesQC();
+                          setState(() {});
+                        },
                   style: ElevatedButton.styleFrom(
-                    primary: DataEntryTheme.deOrangeDark,
-                    alignment: Alignment.center),
+                      primary: DataEntryTheme.deOrangeDark,
+                      alignment: Alignment.center),
                   icon: Icon(Icons.add_circle_outline, size: 18),
                   label: Text("ADD ROW"),
                 ),
               )
-               : Row(
-             children: <Widget>[
+            : Row(
+                children: <Widget>[
                   Expanded(
-                   child: ElevatedButton.icon(
-                     icon: Icon(
-                       Icons.cancel,
-                       size: 24.0,
-                     ),
-                     onPressed: (){
-                       onUpdate=false;
-                       selectedRow = 0;
-                       setState(() {});
-                       },
-                     label: Text("Cancel"),
-                     style: ButtonStyle(
-                         backgroundColor:
-                         MaterialStateProperty.all(Colors.red),
-                         padding:
-                         MaterialStateProperty.all(EdgeInsets.all(10)),
-                         textStyle: MaterialStateProperty.all(
-                         TextStyle(fontSize: 18))),
-                   )),
-               SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-               Expanded(
-                   child: ElevatedButton.icon(
-                     icon: Icon(
-                       Icons.check,
-                       size: 24.0,
-                     ),
-                     onPressed: () async{
-                       await actualizarSamplesQC();
-                       },
-                     label: Text("Update"),
-                     style: ButtonStyle(
-                     ),
-                   )
-               )
-             ],
-           ),
-         SizedBox(
-           height: 10,
-         ),
-         Divider(),
-         SizedBox(
-           height: 5,
-         ),
-         DataTable2(
-           showCheckboxColumn: false,
-           columnSpacing: 12,
-           horizontalMargin: 12,
-           //minWidth: 4000,
-           columns: [
-             DataColumn2(
-               label: Text('CheckId',
-                   textAlign: TextAlign.center),
-             size: ColumnSize.L,),
-             DataColumn2(label: Text('SampleId',
-             textAlign: TextAlign.center,),
-                 size: ColumnSize.L,
-             ),
-             DataColumn2(label: Text('QCType',
-               textAlign: TextAlign.center,),
-                 size: ColumnSize.L,
-             ),
-             DataColumn2(label: Text('StandardId',
-               textAlign: TextAlign.center,),
-                 size: ColumnSize.L,
-             ),
-             DataColumn2(label: Text('Lab',
-               textAlign: TextAlign.center,),
-                 size: ColumnSize.L,
-             ),
-             DataColumn2(label: Text('Comments',
-               textAlign: TextAlign.center,),
-                 size: ColumnSize.L,
-             ),
-           ],
-             rows: _cells,
-         )
-       ],
-     )
-   );
+                      child: ElevatedButton.icon(
+                    icon: Icon(
+                      Icons.cancel,
+                      size: 24.0,
+                    ),
+                    onPressed: () {
+                      onUpdate = false;
+                      selectedRow = 0;
+                      setState(() {});
+                    },
+                    label: Text("Cancel"),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                        textStyle:
+                            MaterialStateProperty.all(TextStyle(fontSize: 18))),
+                  )),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+                  Expanded(
+                      child: ElevatedButton.icon(
+                    icon: Icon(
+                      Icons.check,
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      await actualizarSamplesQC();
+                    },
+                    label: Text("Update"),
+                    style: ButtonStyle(),
+                  ))
+                ],
+              ),
+        SizedBox(
+          height: 10,
+        ),
+        Divider(),
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+              showCheckboxColumn: false,
+              columnSpacing: 12,
+              horizontalMargin: 12,
+              //minWidth: 4000,
+              columns: [
+                DataColumn2(
+                  label: Text('CheckId', textAlign: TextAlign.center),
+                  size: ColumnSize.L,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'SampleId',
+                    textAlign: TextAlign.center,
+                  ),
+                  size: ColumnSize.L,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'QCType',
+                    textAlign: TextAlign.center,
+                  ),
+                  size: ColumnSize.L,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'StandardId',
+                    textAlign: TextAlign.center,
+                  ),
+                  size: ColumnSize.L,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Lab',
+                    textAlign: TextAlign.center,
+                  ),
+                  size: ColumnSize.L,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Comments',
+                    textAlign: TextAlign.center,
+                  ),
+                  size: ColumnSize.L,
+                ),
+              ],
+              rows: _cells,
+            ))
+      ],
+    ));
   }
 
   Widget sFM(TextEditingController sfm_controller,
-      List<Map<String, dynamic>> sfm_items, sfm_label){
+      List<Map<String, dynamic>> sfm_items, sfm_label) {
     return Container(
       child: Column(
         children: [
@@ -337,29 +360,27 @@ class SamplesQCTabState extends State<SamplesQCTab>{
           ),
           SelectFormField(
             decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
-                borderRadius: BorderRadius.all(Radius.circular(100)),
-              ),
-              contentPadding: EdgeInsets.all(15.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(100)
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
                 ),
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              hintText: sfm_label,
-              hintStyle: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 15),
-              prefixIcon: Icon(
-                Icons.list_alt_rounded,
-                color: Colors.black,
-              ),
-              suffixIcon: Icon(
-                Icons.list,
-                color: Colors.black,
-              )
-            ),
+                contentPadding: EdgeInsets.all(15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: sfm_label,
+                hintStyle: TextStyle(
+                    color: Colors.black.withOpacity(0.5), fontSize: 15),
+                prefixIcon: Icon(
+                  Icons.list_alt_rounded,
+                  color: Colors.black,
+                ),
+                suffixIcon: Icon(
+                  Icons.list,
+                  color: Colors.black,
+                )),
             type: SelectFormFieldType.dialog,
             controller: sfm_controller,
             icon: Icon(Icons.filter_list),
@@ -369,17 +390,32 @@ class SamplesQCTabState extends State<SamplesQCTab>{
             enableSearch: true,
             dialogSearchHint: 'Search Option',
             items: sfm_items,
-            onChanged: (val) async{
+            onChanged: (val) async {
               setState(() {
                 pageEvent(true);
               });
-              _db.fnObtenerRegistro(nombreTabla: 'cat_qctype', campo: 'Id', valor: val).then((value) {
-                 if(value.values.elementAt(1).toString() == 'Standard')
-                 {ocultaStandard = true;}else{ocultaStandard = false;}
-                 if(value.values.elementAt(1).toString().contains('Duplicate')
-                     || value.values.elementAt(1).toString().contains('duplicate')
-                 || value.values.elementAt(1).toString() =='Duplicate')
-                 {ocultaSample = true;}else{ocultaSample = false;}
+              _db
+                  .fnObtenerRegistro(
+                      nombreTabla: 'cat_qctype', campo: 'Id', valor: val)
+                  .then((value) {
+                if (value.values.elementAt(1).toString() == 'Standard') {
+                  ocultaStandard = true;
+                } else {
+                  ocultaStandard = false;
+                }
+                if (value.values
+                        .elementAt(1)
+                        .toString()
+                        .contains('Duplicate') ||
+                    value.values
+                        .elementAt(1)
+                        .toString()
+                        .contains('duplicate') ||
+                    value.values.elementAt(1).toString() == 'Duplicate') {
+                  ocultaSample = true;
+                } else {
+                  ocultaSample = false;
+                }
               });
             },
           )
@@ -431,22 +467,26 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     );
   }
 
-  Future<dynamic> validateRequired(Map<String, Object?> valores)async{
+  Future<dynamic> validateRequired(Map<String, Object?> valores) async {
     print(valores);
     errors = '';
-    bool existeQC = await samplesModel.existeSampleQC(valores['CheckId'].toString() , widget.holeId);
-    bool existeSample = await samplesModel.existeSample(valores['CheckId'].toString() , widget.holeId);
+    bool existeQC = await samplesModel.existeSampleQC(
+        valores['CheckId'].toString(), widget.holeId);
+    bool existeSample = await samplesModel.existeSample(
+        valores['CheckId'].toString(), widget.holeId);
 
-    if(existeQC || existeSample){
+    if (existeQC || existeSample) {
       Loader.hide();
-      message(CoolAlertType.error, 'Incorrect data', 'The SampleId is duplicate');
+      message(
+          CoolAlertType.error, 'Incorrect data', 'The SampleId is duplicate');
       return false;
     }
 
-    if(valores['QCType'].toString() == '' || valores['CheckId'].toString() == ''){
-        Loader.hide();
-        message(CoolAlertType.error, 'Incorrect data', 'Please enter the QCType');
-        return false;
+    if (valores['QCType'].toString() == '' ||
+        valores['CheckId'].toString() == '') {
+      Loader.hide();
+      message(CoolAlertType.error, 'Incorrect data', 'Please enter the QCType');
+      return false;
     }
     if (errors != '') {
       return false;
@@ -455,72 +495,92 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     }
   }
 
-  void _getSelectedRowInfo(model){
-    selectedRow=model.id;
+  void _getSelectedRowInfo(model) {
+    selectedRow = model.id;
     setState(() {
       _settingModelBottomSheet(context);
     });
   }
 
-  void _settingModelBottomSheet(context){
+  void _settingModelBottomSheet(context) {
     showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc){
-        return Container(
-          padding: EdgeInsets.only(bottom: 20),
-          child: new Wrap(
-            children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  'Actions to do',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            padding: EdgeInsets.only(bottom: 20),
+            child: new Wrap(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Text(
+                    'Actions to do',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  padding: EdgeInsets.all(10.00),
                 ),
-                padding: EdgeInsets.all(10.00),
-              ),
-              Divider(),
-              new ListTile(
-                leading: new Icon(Icons.edit, color: Colors.green),
-                title: new Text('Edit Record'),
-                onTap: () async{
-                  await _db
-                      .fnObtenerRegistro(
-                      nombreTabla: 'tb_sampqc',
-                      campo: 'Id',
-                      valor: selectedRow)
-                      .then((rows) {
-                    if(rows.values.elementAt(4).toString() == 'Standard')
-                    {ocultaStandard = true;}else{ocultaStandard = false;}
-                    if(rows.values.elementAt(4).toString().contains('Duplicate') || rows.values.elementAt(4).toString().contains('duplicate'))
-                    {ocultaSample = true;}else{ocultaSample = false;}
+                Divider(),
+                new ListTile(
+                    leading: new Icon(Icons.edit, color: Colors.green),
+                    title: new Text('Edit Record'),
+                    onTap: () async {
+                      await _db
+                          .fnObtenerRegistro(
+                              nombreTabla: 'tb_sampqc',
+                              campo: 'Id',
+                              valor: selectedRow)
+                          .then((rows) {
+                        if (rows.values.elementAt(4).toString() == 'Standard') {
+                          ocultaStandard = true;
+                        } else {
+                          ocultaStandard = false;
+                        }
+                        if (rows.values
+                                .elementAt(4)
+                                .toString()
+                                .contains('Duplicate') ||
+                            rows.values
+                                .elementAt(4)
+                                .toString()
+                                .contains('duplicate')) {
+                          ocultaSample = true;
+                        } else {
+                          ocultaSample = false;
+                        }
                         setState(() {
-                          _controllerCheckId.text = rows.values.elementAt(2).toString();
-                          _controllerSampleId.text = rows.values.elementAt(3).toString();
-                          _controllerQCType.text = rows.values.elementAt(4).toString();
-                          _controllerStandardId.text = rows.values.elementAt(5).toString();
-                          _controllerLab.text = rows.values.elementAt(6).toString();
-                          _controllerComments.text = rows.values.elementAt(7).toString();
+                          _controllerCheckId.text =
+                              rows.values.elementAt(2).toString();
+                          _controllerSampleId.text =
+                              rows.values.elementAt(3).toString();
+                          _controllerQCType.text =
+                              rows.values.elementAt(4).toString();
+                          _controllerStandardId.text =
+                              rows.values.elementAt(5).toString();
+                          _controllerLab.text =
+                              rows.values.elementAt(6).toString();
+                          _controllerComments.text =
+                              rows.values.elementAt(7).toString();
                         });
-                  }).onError((error, stackTrace) {
-                  });
-                  Navigator.pop(context);
-                  onUpdate = true;
-                  setState(() {});
-                }),
-              new ListTile(
-                leading: new Icon(Icons.delete, color: Colors.red,),
-                title: new Text('Delete'),
-                onTap: () => {showAlertDialog(context)},
-              )
-            ],
-          ),
-        );
-      }
-    );
+                      }).onError((error, stackTrace) {});
+                      Navigator.pop(context);
+                      onUpdate = true;
+                      setState(() {});
+                    }),
+                new ListTile(
+                  leading: new Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  title: new Text('Delete'),
+                  onTap: () => {showAlertDialog(context)},
+                )
+              ],
+            ),
+          );
+        });
   }
 
-  showAlertDialog(BuildContext Context) async{
+  showAlertDialog(BuildContext Context) async {
     Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
@@ -552,7 +612,7 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     );
   }
 
-  Future<void> fnEliminarSamplesQC(int id) async{
+  Future<void> fnEliminarSamplesQC(int id) async {
     await new SamplesQCModel()
         .fnEliminarRegistro(nombreTabla: 'tb_sampqc', campo: 'Id', valor: id)
         .then((value) {
@@ -564,54 +624,47 @@ class SamplesQCTabState extends State<SamplesQCTab>{
   }
 
   Future<void> fnLlenarSamplesQC(int collarId) async {
-  _cells.clear();
-  List<SamplesQCModel> listSamplesQCModel = await new SamplesQCModel()
-      .fnObtenerRegistrosPorCollarId(collarId: collarId).then((value) => value);
-  listSamplesQCModel.forEach((model) {
-    Color cell_color = Colors.black;
-    _cells.add(
-     DataRow(
-         cells: [
-           DataCell(
-             Text('${model.CheckId}',
-               style: TextStyle(color: cell_color),
-             ),
-           ),
-           DataCell(
-             Text('${model.SampleID}'),
-           ),
-           DataCell(
-               Text('${model.QCType}')
-           ),
-           DataCell(
-             Text('${model.StandardID.toString()}')
-           ),
-           DataCell(
-               Text('${model.Lab}')
-           ),
-           DataCell(
-             Text('${model.QCComment}')
-           )
-         ],
-       onSelectChanged:candado ? null: (newValue){
-           _getSelectedRowInfo(model);
-       }
-     )
-    );
-  });
-  setState(() {});
+    _cells.clear();
+    List<SamplesQCModel> listSamplesQCModel = await new SamplesQCModel()
+        .fnObtenerRegistrosPorCollarId(collarId: collarId)
+        .then((value) => value);
+    listSamplesQCModel.forEach((model) {
+      Color cell_color = Colors.black;
+      _cells.add(DataRow(
+          cells: [
+            DataCell(
+              Text(
+                '${model.CheckId}',
+                style: TextStyle(color: cell_color),
+              ),
+            ),
+            DataCell(
+              Text('${model.SampleID}'),
+            ),
+            DataCell(Text('${model.QCType}')),
+            DataCell(Text('${model.StandardID.toString()}')),
+            DataCell(Text('${model.Lab}')),
+            DataCell(Text('${model.QCComment}'))
+          ],
+          onSelectChanged: candado
+              ? null
+              : (newValue) {
+                  _getSelectedRowInfo(model);
+                }));
+    });
+    setState(() {});
   }
 
   Future<void> registerSamplesQC(valores) async {
     Loader.show(
-        context,
+      context,
       isAppbarOverlay: true,
       isBottomBarOverlay: true,
       progressIndicator: widgetLoading(context),
       overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
     );
     int response = await _db.fnInsertarRegistro('tb_sampqc', valores);
-    if(response>0){
+    if (response > 0) {
       Loader.hide();
       await fnLlenarSamplesQC(widget.holeId);
       _controllerQCType.clear();
@@ -633,7 +686,7 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     }
   }
 
-  Future<void> insertSamplesQC() async{
+  Future<void> insertSamplesQC() async {
     FocusScope.of(context).unfocus();
     Loader.show(
       context,
@@ -644,92 +697,92 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     );
     String duplicate = '';
     Map<String, dynamic> valores = {
-      'IdCollar' : widget.holeId,
+      'IdCollar': widget.holeId,
       'CheckId': _controllerCheckId.text,
       'SampleId': _controllerSampleId.text,
       'QCType': _controllerQCType.text,
-      'StandardId':_controllerStandardId.text,
-      'Lab':_controllerLab.text,
-      'QCComment':_controllerComments.text.toString(),
+      'StandardId': _controllerStandardId.text,
+      'Lab': _controllerLab.text,
+      'QCComment': _controllerComments.text.toString(),
       'status': 1
-   };
-      if(await validateRequired(valores)){
-     Loader.show(
-       context,
-       isAppbarOverlay: true,
-       isBottomBarOverlay: true,
-       progressIndicator: widgetLoading(context),
-       overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
-     );
+    };
+    if (await validateRequired(valores)) {
+      Loader.show(
+        context,
+        isAppbarOverlay: true,
+        isBottomBarOverlay: true,
+        progressIndicator: widgetLoading(context),
+        overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
+      );
       registrarSamplesQC(valores);
-   }else{
-     if (errors != ''){
-       Loader.hide();
-       CoolAlert.show(
-         context: context,
-         type: CoolAlertType.warning,
-         backgroundColor: DataEntryTheme.deGrayMedium,
-         confirmBtnColor: DataEntryTheme.deGrayDark,
-         showCancelBtn: true,
-         confirmBtnTextStyle: TextStyle(color: DataEntryTheme.deGrayLight),
-         cancelBtnText: 'Cancel',
-         cancelBtnTextStyle: TextStyle(color: DataEntryTheme.deBlack),
-         title: 'Confirmation',
-         text: 'The Following errors have benn detected \n\n'+
-           errors+
-           '\n\nDo you want to proceed to record the data?',
-         onConfirmBtnTap: () async{
-           Navigator.pop(context);
-          await registrarSamplesQC(valores);
-         },
-         onCancelBtnTap: ()=> Navigator.pop(context));
-     }
-   }
+    } else {
+      if (errors != '') {
+        Loader.hide();
+        CoolAlert.show(
+            context: context,
+            type: CoolAlertType.warning,
+            backgroundColor: DataEntryTheme.deGrayMedium,
+            confirmBtnColor: DataEntryTheme.deGrayDark,
+            showCancelBtn: true,
+            confirmBtnTextStyle: TextStyle(color: DataEntryTheme.deGrayLight),
+            cancelBtnText: 'Cancel',
+            cancelBtnTextStyle: TextStyle(color: DataEntryTheme.deBlack),
+            title: 'Confirmation',
+            text: 'The Following errors have benn detected \n\n' +
+                errors +
+                '\n\nDo you want to proceed to record the data?',
+            onConfirmBtnTap: () async {
+              Navigator.pop(context);
+              await registrarSamplesQC(valores);
+            },
+            onCancelBtnTap: () => Navigator.pop(context));
+      }
+    }
   }
 
-  Future<void> actualizarSamplesQC() async{
-   Loader.show(
-     context,
-     isAppbarOverlay: true,
-     isBottomBarOverlay: true,
-     progressIndicator: widgetLoading(context),
-     overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
-   );
-   Map<String, dynamic> valores = {
-     'IdCollar' : widget.holeId,
-     'CheckId': _controllerCheckId.text,
-     'SampleId': _controllerSampleId.text,
-     'QCType': _controllerQCType.text,
-     'StandardId':_controllerStandardId.text,
-     'Lab':_controllerLab.text,
-     'QCComment':_controllerComments.text.toString()
-   };
-   int response =
-   await _db.fnActualizarRegistro('tb_sampqc', valores, 'Id', selectedRow);
-   print(selectedRow);
-   print("Este es el reponse del actualizar $response");
-   if (response > 0) {
-     Loader.hide();
-     await fnLlenarSamplesQC(widget.holeId);
-     selectedRow = 0;
-     onUpdate = false;
-     _controllerQCType.clear();
-     _controllerCheckId.clear();
-     _controllerSampleId.clear();
-     _controllerStandardId.clear();
-     _controllerLab.clear();
-     _controllerComments.clear();
-     setState(() {});
-     CoolAlert.show(
-       context: context,
-       backgroundColor: DataEntryTheme.deGrayLight,
-       confirmBtnColor: DataEntryTheme.deGrayDark,
-       confirmBtnTextStyle: TextStyle(color: DataEntryTheme.deGrayLight),
-       type: CoolAlertType.success,
-       title: "Success!",
-       text: 'Samples data has been updated successfully',
-     );
-   }
+  Future<void> actualizarSamplesQC() async {
+    Loader.show(
+      context,
+      isAppbarOverlay: true,
+      isBottomBarOverlay: true,
+      progressIndicator: widgetLoading(context),
+      overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
+    );
+    Map<String, dynamic> valores = {
+      'IdCollar': widget.holeId,
+      'CheckId': _controllerCheckId.text,
+      'SampleId': _controllerSampleId.text,
+      'QCType': _controllerQCType.text,
+      'StandardId': _controllerStandardId.text,
+      'Lab': _controllerLab.text,
+      'QCComment': _controllerComments.text.toString()
+    };
+    int response =
+        await _db.fnActualizarRegistro('tb_sampqc', valores, 'Id', selectedRow);
+    print(selectedRow);
+    print("Este es el reponse del actualizar $response");
+    if (response > 0) {
+      Loader.hide();
+      await fnLlenarSamplesQC(widget.holeId);
+      selectedRow = 0;
+      onUpdate = false;
+      _controllerQCType.clear();
+      _controllerCheckId.clear();
+      _controllerSampleId.clear();
+      _controllerStandardId.clear();
+      _controllerLab.clear();
+      _controllerComments.clear();
+      setState(() {});
+      CoolAlert.show(
+        context: context,
+        backgroundColor: DataEntryTheme.deGrayLight,
+        confirmBtnColor: DataEntryTheme.deGrayDark,
+        confirmBtnTextStyle: TextStyle(color: DataEntryTheme.deGrayLight),
+        type: CoolAlertType.success,
+        title: "Success!",
+        text: 'Samples data has been updated successfully',
+      );
+    }
   }
 
   Future<bool> fnCargarTabs() async {
@@ -752,7 +805,7 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     }
     return true;
   }
-  
+
   Future<void> registrarSamplesQC(valores) async {
     Loader.show(
       context,
@@ -763,24 +816,22 @@ class SamplesQCTabState extends State<SamplesQCTab>{
     );
     int response = await _db.fnInsertarRegistro('tb_sampqc', valores);
     //print("Este es el reponse del insert $response");
-    if(response > 0){
+    if (response > 0) {
       Loader.hide();
       await fnLlenarSamplesQC(widget.holeId);
-    _controllerComments.clear();
-    _controllerLab.clear();
-    _controllerSampleId.clear();
-    _controllerCheckId.clear();
-    _controllerStandardId.clear();
-    CoolAlert.show(
-        context: context,
-        backgroundColor: DataEntryTheme.deGrayLight,
-        confirmBtnColor: DataEntryTheme.deGrayDark,
-        confirmBtnTextStyle: TextStyle(color: DataEntryTheme.deBrownLight),
-        type: CoolAlertType.success,
-        title: "Success!",
-        text: 'Samples data has been saved Successfully'
-    );
+      _controllerComments.clear();
+      _controllerLab.clear();
+      _controllerSampleId.clear();
+      _controllerCheckId.clear();
+      _controllerStandardId.clear();
+      CoolAlert.show(
+          context: context,
+          backgroundColor: DataEntryTheme.deGrayLight,
+          confirmBtnColor: DataEntryTheme.deGrayDark,
+          confirmBtnTextStyle: TextStyle(color: DataEntryTheme.deBrownLight),
+          type: CoolAlertType.success,
+          title: "Success!",
+          text: 'Samples data has been saved Successfully');
     }
   }
-
 }

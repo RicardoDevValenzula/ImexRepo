@@ -1,4 +1,3 @@
-
 import 'package:data_entry_app/models/DownholeSurveyModel.dart';
 import 'package:data_entry_app/models/RelProfileTabsFieldsModal.dart';
 import 'package:intl/intl.dart';
@@ -381,58 +380,62 @@ class DownholeSurveysTabState extends State<DownholeSurveysTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 600,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'Depth',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 600,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'Depth',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Survey Type',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Survey Type',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Dip',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Dip',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Azimuth',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Azimuth',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Azimuth Type',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Azimuth Type',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Survey Date',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Survey Date',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Comments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Comments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );

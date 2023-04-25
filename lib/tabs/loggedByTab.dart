@@ -74,30 +74,32 @@ class LoggedByTabState extends State<LoggedByTab> {
   void initState() {
     super.initState();
     _db
-        .fnRegistrosValueGeolog(
-            tbName: 'cat_geologist', holeid: widget.holeId)
+        .fnRegistrosValueGeolog(tbName: 'cat_geologist', holeid: widget.holeId)
         .then((rows) {
       setState(() {
         _itemsGeologist = rows;
       });
     });
 
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
         String fechaInicio = rows.values.elementAt(7) ?? '';
         String fechaFinal = rows.values.elementAt(8) ?? '';
 
         log('${rows.values.elementAt(34)}');
 
-        if(rows.values.elementAt(7) != null || rows.values.elementAt(8)!=null){
+        if (rows.values.elementAt(7) != null ||
+            rows.values.elementAt(8) != null) {
           _dateStartCollar = fechaInicio;
           _dateEndCollar = fechaFinal;
         }
 
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
-
       });
     });
 
@@ -251,7 +253,7 @@ class LoggedByTabState extends State<LoggedByTab> {
           SizedBox(
             height: 10,
           ),
-           labelInput('Date Logged'),
+          labelInput('Date Logged'),
           Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -261,8 +263,7 @@ class LoggedByTabState extends State<LoggedByTab> {
                 Radius.circular(100),
               ),
             ),
-            child:
-            Visibility(
+            child: Visibility(
               visible: true,
               child: DateTimeField(
                 controller: _dateLoggedCtrl,
@@ -317,10 +318,12 @@ class LoggedByTabState extends State<LoggedByTab> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton.icon(
-                    onPressed: candado ?  null : () async {
-                      await insertLoggedBy();
-                      setState(() {});
-                    },
+                    onPressed: candado
+                        ? null
+                        : () async {
+                            await insertLoggedBy();
+                            setState(() {});
+                          },
                     style: ElevatedButton.styleFrom(
                         primary: DataEntryTheme.deOrangeDark,
                         alignment: Alignment.center),
@@ -378,41 +381,45 @@ class LoggedByTabState extends State<LoggedByTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 600,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'GeolFrom',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 600,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'GeolFrom',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'GeolTo',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'GeolTo',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Geologist',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Geologist',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'DateLogged',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'DateLogged',
+                      textAlign: TextAlign.center,
+                    ),
+                    numeric: true,
                   ),
-                  numeric: true,
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -423,72 +430,74 @@ class LoggedByTabState extends State<LoggedByTab> {
   Widget sFM(TextEditingController sfm_controller,
       List<Map<String, dynamic>> sfm_items, sfm_label) {
     return Visibility(
-      visible:  ( _items.any((element ) => element.values.contains('Geologist'))) ? true : false ,
+        visible: (_items.any((element) => element.values.contains('Geologist')))
+            ? true
+            : false,
         child: Column(
-      children: [
-        Column(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                padding: EdgeInsets.only(left: 10, bottom: 5),
-                child: Text(
-                  sfm_label,
-                  style: TextStyle(color: Colors.grey),
+          children: [
+            Column(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10, bottom: 5),
+                    child: Text(
+                      sfm_label,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SelectFormField(
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                ),
+                contentPadding: EdgeInsets.all(15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(100),
+                  ),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: sfm_label,
+                hintStyle: TextStyle(
+                    color: Colors.black.withOpacity(0.5), fontSize: 15),
+                prefixIcon: Icon(
+                  Icons.list_alt_rounded,
+                  color: Colors.black,
+                ),
+                suffixIcon: Icon(
+                  Icons.list,
+                  color: Colors.black,
                 ),
               ),
-            ),
-          ],
-        ),
-        SelectFormField(
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
-              borderRadius: BorderRadius.all(Radius.circular(100)),
-            ),
-            contentPadding: EdgeInsets.all(15.0),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(100),
-              ),
-            ),
-            filled: true,
-            fillColor: Colors.white,
-            hintText: sfm_label,
-            hintStyle:
-                TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 15),
-            prefixIcon: Icon(
-              Icons.list_alt_rounded,
-              color: Colors.black,
-            ),
-            suffixIcon: Icon(
-              Icons.list,
-              color: Colors.black,
-            ),
-          ),
-          type: SelectFormFieldType.dialog,
-          controller: sfm_controller,
-          icon: Icon(Icons.filter_list),
-          changeIcon: true,
-          dialogTitle: 'Choose a ${sfm_label}',
-          dialogCancelBtn: 'CANCEL',
-          enableSearch: true,
-          dialogSearchHint: 'Search option',
-          items: sfm_items,
-          //labelText: geoigsttext,
-          onChanged: (val) async {
-            setState(() {
-              pageEvent(true);
-            });
-          },
-          /*validator: (val) {
+              type: SelectFormFieldType.dialog,
+              controller: sfm_controller,
+              icon: Icon(Icons.filter_list),
+              changeIcon: true,
+              dialogTitle: 'Choose a ${sfm_label}',
+              dialogCancelBtn: 'CANCEL',
+              enableSearch: true,
+              dialogSearchHint: 'Search option',
+              items: sfm_items,
+              //labelText: geoigsttext,
+              onChanged: (val) async {
+                setState(() {
+                  pageEvent(true);
+                });
+              },
+              /*validator: (val) {
             setState(() => sfm_validate = val ?? '');
             return null;
           },
           onSaved: (val) => setState(() => sfm_value_saved = val ?? ''),*/
-        ),
-      ],
-    ));
+            ),
+          ],
+        ));
   }
 
   Widget labelInput(text) {
@@ -679,26 +688,26 @@ class LoggedByTabState extends State<LoggedByTab> {
             ') of Collar.\n';
       }
 
-      if(valores['DateLogged'] != ''){
+      if (valores['DateLogged'] != '') {
         DateTime dtStart = DateTime.parse(widget.fechaInicio);
         DateTime? dtEnd;
 
-        if(widget.fechaFinal == ''){
+        if (widget.fechaFinal == '') {
           dtEnd = DateTime.now();
-        }else{
+        } else {
           dtEnd = DateTime.parse(widget.fechaFinal);
         }
         DateTime dtLogged = DateTime.parse(valores['DateLogged'].toString());
         log('${dtStart}');
         log('${dtLogged}');
-        if(dtLogged.isBefore(dtStart)){
+        if (dtLogged.isBefore(dtStart)) {
           Loader.hide();
           message(CoolAlertType.error, 'Incorrect data',
               'The date Logged is before the Date of the collar');
           return false;
         }
 
-        if(dtLogged.isAfter(dtEnd)){
+        if (dtLogged.isAfter(dtEnd)) {
           Loader.hide();
           message(CoolAlertType.error, 'Incorrect data',
               'The date Logged is After the Date of the collar');
@@ -716,7 +725,6 @@ class LoggedByTabState extends State<LoggedByTab> {
               valores['GeolFrom'].toString() +
               '", so there is a difference.\n';
         }
-
       } else {}
       // #UPDATE.
     }
@@ -813,9 +821,11 @@ class LoggedByTabState extends State<LoggedByTab> {
                   DateTime.parse(model.dateLogged), [mm, '/', dd, '/', yyyy])),
             ),
           ],
-          onSelectChanged: candado ? null :(newValue) {
-            _getSelectedRowInfo(model);
-          },
+          onSelectChanged: candado
+              ? null
+              : (newValue) {
+                  _getSelectedRowInfo(model);
+                },
         ),
       );
       //_lastGeolFrom = double.parse(model.geolFrom.toString());
@@ -934,7 +944,7 @@ class LoggedByTabState extends State<LoggedByTab> {
       for (RelProfileTabsFieldsModal item in tb) {
         String nombre = item.fieldName;
         String capNombre = nombre.toUpperCase();
-        if(nombre=='DateLogged'){}
+        if (nombre == 'DateLogged') {}
         _items.add({
           'value': nombre,
           'label': capNombre,

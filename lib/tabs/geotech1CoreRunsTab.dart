@@ -113,9 +113,12 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
       });
     });
 
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -282,21 +285,23 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('RQDraw'))) ? labelInput('RQD Raw') : labelInput(''),
+          (_items.any((element) => element.values.contains('RQDraw')))
+              ? labelInput('RQD Raw')
+              : labelInput(''),
           Container(
-            height:45,
+            height: 45,
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('RQDraw'))) ? true : false,
+              visible:
+                  (_items.any((element) => element.values.contains('RQDraw')))
+                      ? true
+                      : false,
               child: TextField(
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(
-                        left: 14.0,
-                        right: 14.0,
-                        top: 14.0,
-                        bottom: 14.0),
+                        left: 14.0, right: 14.0, top: 14.0, bottom: 14.0),
                     hintStyle: TextStyle(color: Colors.grey[800]),
                     hintText: 'RQD Raw',
                     fillColor: (rqdRawDifference) ? Colors.red : Colors.white70,
@@ -304,55 +309,56 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
                     prefixIcon: Icon(Icons.list_alt_rounded),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.3),
-                          width: 2.1),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(100.0)),
+                          color: Colors.grey.withOpacity(0.3), width: 2.1),
+                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.3),
-                          width: 1.0),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(100.0)),
-                    )
-                ),
+                          color: Colors.grey.withOpacity(0.3), width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                    )),
                 controller: _RQDRawCtrl,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
-                onChanged: (value){
+                onChanged: (value) {
                   rqdRawDifference = false;
-                  if(isNumeric(_GeolToCtrl.text) && isNumeric(_GeolFromCtrl.text) && isNumeric(value)){
-                    double maxNum= double.parse(_GeolToCtrl.text) - double.parse(_GeolFromCtrl.text);
-                    if(double.parse(value) > maxNum){
+                  if (isNumeric(_GeolToCtrl.text) &&
+                      isNumeric(_GeolFromCtrl.text) &&
+                      isNumeric(value)) {
+                    double maxNum = double.parse(_GeolToCtrl.text) -
+                        double.parse(_GeolFromCtrl.text);
+                    if (double.parse(value) > maxNum) {
                       message(CoolAlertType.error, 'Incorrect data',
                           'The value of RQDRaw cannot be greater than ${maxNum}.');
                       _RQDRawCtrl.clear();
-                    };
+                    }
+                    ;
                   }
                   _RQDCtrl.text = fnCalcularRecovery(
                       _GeolFromCtrl.text, _GeolToCtrl.text, value);
                   setStateIfMounted(() {});
                 },
               ),
-            ) ,
+            ),
           ),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Recoveryraw'))) ? labelInput('Recovery Raw'):labelInput(''),
+          (_items.any((element) => element.values.contains('Recoveryraw')))
+              ? labelInput('Recovery Raw')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('Recoveryraw'))) ? true:false,
+              visible: (_items
+                      .any((element) => element.values.contains('Recoveryraw')))
+                  ? true
+                  : false,
               child: TextField(
                 style: TextStyle(
                   fontSize: 14.0,
                 ),
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(
-                        left: 14.0,
-                        right: 14.0,
-                        top: 14.0,
-                        bottom: 14.0),
+                        left: 14.0, right: 14.0, top: 14.0, bottom: 14.0),
                     hintStyle: TextStyle(color: Colors.grey[800]),
                     hintText: 'Recovery Raw',
                     fillColor: (rqdRawDifference) ? Colors.red : Colors.white70,
@@ -360,31 +366,30 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
                     prefixIcon: Icon(Icons.list_alt_rounded),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.3),
-                          width: 2.1),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(100.0)),
+                          color: Colors.grey.withOpacity(0.3), width: 2.1),
+                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.3),
-                          width: 1.0),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(100.0)),
-                    )
-                ),
+                          color: Colors.grey.withOpacity(0.3), width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                    )),
                 controller: _RecoveryRawCtrl,
                 cursorColor: Colors.red,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 onChanged: (value) {
                   recoveryRawDifference = false;
-                  if(isNumeric(_GeolToCtrl.text) && isNumeric(_GeolFromCtrl.text) && isNumeric(value)){
-                    double maxNum= double.parse(_GeolToCtrl.text) - double.parse(_GeolFromCtrl.text);
-                    if(double.parse(value) > maxNum){
+                  if (isNumeric(_GeolToCtrl.text) &&
+                      isNumeric(_GeolFromCtrl.text) &&
+                      isNumeric(value)) {
+                    double maxNum = double.parse(_GeolToCtrl.text) -
+                        double.parse(_GeolFromCtrl.text);
+                    if (double.parse(value) > maxNum) {
                       message(CoolAlertType.error, 'Incorrect data',
                           'The value of Recovery Raw cannot be greater than ${maxNum}.');
                       _RecoveryRawCtrl.clear();
-                    };
+                    }
+                    ;
                   }
                   _RecoveryCtrl.text = fnCalcularRecovery(
                       _GeolFromCtrl.text, _GeolToCtrl.text, value);
@@ -396,29 +401,38 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('RECOVERY'))) ? labelInput('Recovery'):labelInput(''),
+          (_items.any((element) => element.values.contains('RECOVERY')))
+              ? labelInput('Recovery')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('RECOVERY'))) ? true : false,
-             child: BsInput(
-               style: BsInputStyle.outlineRounded,
-               size: BsInputSize.md,
-               hintText: 'Recovery',
-               controller: _RecoveryCtrl,
-               prefixIcon: Icons.list_alt_rounded,
-               keyboardType: TextInputType.numberWithOptions(decimal: true),
-               readOnly: true,
-
-             ),
+              visible:
+                  (_items.any((element) => element.values.contains('RECOVERY')))
+                      ? true
+                      : false,
+              child: BsInput(
+                style: BsInputStyle.outlineRounded,
+                size: BsInputSize.md,
+                hintText: 'Recovery',
+                controller: _RecoveryCtrl,
+                prefixIcon: Icons.list_alt_rounded,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                readOnly: true,
+              ),
             ),
           ),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('RECOVERY'))) ? labelInput('RQD'):labelInput(''),
+          (_items.any((element) => element.values.contains('RECOVERY')))
+              ? labelInput('RQD')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('RECOVERY'))) ? true:false,
+              visible:
+                  (_items.any((element) => element.values.contains('RECOVERY')))
+                      ? true
+                      : false,
               child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
@@ -433,67 +447,85 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Lith1Spec'))) ? sFM(_Lith1SpecCtrl, _itemsLith1Spec, 'Lith1Spec') : labelInput(''),
+          (_items.any((element) => element.values.contains('Lith1Spec')))
+              ? sFM(_Lith1SpecCtrl, _itemsLith1Spec, 'Lith1Spec')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Longest_Piece'))) ? labelInput('Longest Piece') : labelInput(''),
+          (_items.any((element) => element.values.contains('Longest_Piece')))
+              ? labelInput('Longest Piece')
+              : labelInput(''),
           Container(
               child: Visibility(
-                visible: ( _items.any( (element) => element.values.contains('Longest_Piece'))) ? true:false,
-                child: BsInput(
-                  style: BsInputStyle.outlineRounded,
-                  size: BsInputSize.md,
-                  hintText: 'Longest Piece',
-                  controller: _LongestPieceCtrl,
-                  prefixIcon: Icons.list_alt_rounded,
-                  keyboardType: TextInputType.numberWithOptions(),
-                ),
-            )
-
-          ),
+            visible: (_items
+                    .any((element) => element.values.contains('Longest_Piece')))
+                ? true
+                : false,
+            child: BsInput(
+              style: BsInputStyle.outlineRounded,
+              size: BsInputSize.md,
+              hintText: 'Longest Piece',
+              controller: _LongestPieceCtrl,
+              prefixIcon: Icons.list_alt_rounded,
+              keyboardType: TextInputType.numberWithOptions(),
+            ),
+          )),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Rock_Strength'))) ? sFM(_RockStrengthCtrl, _itemsRockStrength, 'Rock Strength'):labelInput(''),
+          (_items.any((element) => element.values.contains('Rock_Strength')))
+              ? sFM(_RockStrengthCtrl, _itemsRockStrength, 'Rock Strength')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Hardness'))) ? sFM(_HardnessCtrl, _itemsHardness, 'Hardness') : labelInput(''),
+          (_items.any((element) => element.values.contains('Hardness')))
+              ? sFM(_HardnessCtrl, _itemsHardness, 'Hardness')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('AlterationGrade'))) ? sFM(_AlterationGradeCtrl, _itemsAlterationGrade, 'Alteration Grade'): labelInput(''),
+          (_items.any((element) => element.values.contains('AlterationGrade')))
+              ? sFM(_AlterationGradeCtrl, _itemsAlterationGrade,
+                  'Alteration Grade')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Weathering'))) ? sFM(_WeatheringCtrl, _itemsWeathering, 'Weathering') : labelInput(''),
+          (_items.any((element) => element.values.contains('Weathering')))
+              ? sFM(_WeatheringCtrl, _itemsWeathering, 'Weathering')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Comments'))) ? labelInput('Comments'):labelInput(''),
+          (_items.any((element) => element.values.contains('Comments')))
+              ? labelInput('Comments')
+              : labelInput(''),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              child: Visibility(
-                visible: ( _items.any( (element) => element.values.contains('Comments'))) ? true : false,
-                child:BsInput(
-                  maxLines: null,
-                  minLines: 4,
-                  keyboardType: TextInputType.multiline,
-                  style: BsInputStyle.outline,
-                  size: BsInputSize.md,
-                  hintText: 'Comments',
-                  controller: _CommentsCtrl,
-                  prefixIcon: Icons.comment,
-                  onChange: (text) {
-                    setStateIfMounted(() {
-                      pageEvent(true);
-                    });
-                  },
-                ),
-              )
-            ),
+                child: Visibility(
+              visible:
+                  (_items.any((element) => element.values.contains('Comments')))
+                      ? true
+                      : false,
+              child: BsInput(
+                maxLines: null,
+                minLines: 4,
+                keyboardType: TextInputType.multiline,
+                style: BsInputStyle.outline,
+                size: BsInputSize.md,
+                hintText: 'Comments',
+                controller: _CommentsCtrl,
+                prefixIcon: Icons.comment,
+                onChange: (text) {
+                  setStateIfMounted(() {
+                    pageEvent(true);
+                  });
+                },
+              ),
+            )),
           ),
           SizedBox(
             height: 20,
@@ -503,10 +535,12 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton.icon(
-                    onPressed:candado ? null : () async {
-                      await insertStructure();
-                      setStateIfMounted(() {});
-                    },
+                    onPressed: candado
+                        ? null
+                        : () async {
+                            await insertStructure();
+                            setStateIfMounted(() {});
+                          },
                     style: ElevatedButton.styleFrom(
                         primary: DataEntryTheme.deOrangeDark,
                         alignment: Alignment.center),
@@ -564,94 +598,98 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 900,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'GeolFrom',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 900,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'GeolFrom',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'GeolTo',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'GeolTo',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'RQD Raw',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'RQD Raw',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Recovery Raw',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Recovery Raw',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Recovery',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Recovery',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'RQD',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'RQD',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Lith1Spec',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Lith1Spec',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Longest Piece',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Longest Piece',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Rock Strength',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Rock Strength',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Hardness',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Hardness',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Alteration Grade',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Alteration Grade',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Weathering',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Weathering',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Comments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Comments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -960,7 +998,8 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
             '", therefore you are overlapping values.\n';
       }
 
-      double dif = (double.parse(valores['GeolFrom'].toString()) - double.parse(valores['GeolTo'].toString()));
+      double dif = (double.parse(valores['GeolFrom'].toString()) -
+          double.parse(valores['GeolTo'].toString()));
 
       if (valores['Longest_Piece'].toString() == '' ||
           !isNumeric(valores['Longest_Piece'].toString())) {
@@ -968,13 +1007,12 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
         message(CoolAlertType.error, 'Incorrect data',
             'Please enter the Longest Piece (numeric)');
       }
-      if( double.parse(valores['Longest_Piece'].toString()) > dif.abs()  ){
+      if (double.parse(valores['Longest_Piece'].toString()) > dif.abs()) {
         Loader.hide();
         message(CoolAlertType.error, 'Incorrect data',
             'The Longest Piece is larger than the interval length');
         return false;
       }
-
     }
 
     if (errors != '') {
@@ -1071,9 +1109,15 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
     print(geotech1CoreRunsModel);
     listStructureModel.forEach((model) {
       Color cell_color = Colors.black;
-      currentRow ++;
-      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo || double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
-        if(currentRow==1 && double.parse(model.geolFrom.toStringAsFixed(3)) == 0){cell_color = Colors.black;}else{cell_color = Colors.red;}
+      currentRow++;
+      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo ||
+          double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
+        if (currentRow == 1 &&
+            double.parse(model.geolFrom.toStringAsFixed(3)) == 0) {
+          cell_color = Colors.black;
+        } else {
+          cell_color = Colors.red;
+        }
       }
       _cells.add(
         DataRow(
@@ -1121,9 +1165,11 @@ class Geotech1CoreRunsTabState extends State<Geotech1CoreRunsTab> {
               Text('${model.comments}'),
             ),
           ],
-          onSelectChanged: candado ? null : (newValue) {
-            _getSelectedRowInfo(model);
-          },
+          onSelectChanged: candado
+              ? null
+              : (newValue) {
+                  _getSelectedRowInfo(model);
+                },
         ),
       );
       //_lastGeolFrom = double.parse(model.geolFrom.toString());

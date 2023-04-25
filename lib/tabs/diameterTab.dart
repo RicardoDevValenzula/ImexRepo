@@ -94,9 +94,12 @@ class DiameterTabState extends State<DiameterTab> {
       });
     });
 
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -121,89 +124,107 @@ class DiameterTabState extends State<DiameterTab> {
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('Startdepth'))) ? labelInput('Start Depth'):labelInput(''),
+          (_items.any((element) => element.values.contains('Startdepth')))
+              ? labelInput('Start Depth')
+              : labelInput(''),
           Container(
-            child: Visibility(
-              visible: (_items.any((element) => element.values.contains('Startdepth'))) ? true : false,
-              child: BsInput(
-                style: BsInputStyle.outlineRounded,
-                size: BsInputSize.md,
-                hintText: 'Start Depth',
-                controller: _StartDepthCtrl,
-                prefixIcon: Icons.list_alt_rounded,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-              ),
-            )
-          ),
+              child: Visibility(
+            visible:
+                (_items.any((element) => element.values.contains('Startdepth')))
+                    ? true
+                    : false,
+            child: BsInput(
+              style: BsInputStyle.outlineRounded,
+              size: BsInputSize.md,
+              hintText: 'Start Depth',
+              controller: _StartDepthCtrl,
+              prefixIcon: Icons.list_alt_rounded,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+            ),
+          )),
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('Enddepth'))) ? labelInput('End Depth'):labelInput(''),
+          (_items.any((element) => element.values.contains('Enddepth')))
+              ? labelInput('End Depth')
+              : labelInput(''),
           Container(
-            child: Visibility(
-              visible: (_items.any((element) => element.values.contains('Enddepth'))) ? true : false ,
-              child:BsInput(
-                style: BsInputStyle.outlineRounded,
-                size: BsInputSize.md,
-                hintText: 'end Depth',
-                controller: _EndDepthCtrl,
-                prefixIcon: Icons.list_alt_rounded,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                onChange: (value){
-                  if(int.tryParse(value)! > widget.totalDepth) {
-                    message(CoolAlertType.error, 'Incorrect data',
-                        'The End Depth cannot be grater than the total collar depth');
-                    _EndDepthCtrl.clear();
-                  }
-                  setState(() {
-
-                  });
-                },
-              ),
-            )
-          ),
+              child: Visibility(
+            visible:
+                (_items.any((element) => element.values.contains('Enddepth')))
+                    ? true
+                    : false,
+            child: BsInput(
+              style: BsInputStyle.outlineRounded,
+              size: BsInputSize.md,
+              hintText: 'end Depth',
+              controller: _EndDepthCtrl,
+              prefixIcon: Icons.list_alt_rounded,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onChange: (value) {
+                if (int.tryParse(value)! > widget.totalDepth) {
+                  message(CoolAlertType.error, 'Incorrect data',
+                      'The End Depth cannot be grater than the total collar depth');
+                  _EndDepthCtrl.clear();
+                }
+                setState(() {});
+              },
+            ),
+          )),
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('DiameterType'))) ? sFM(_DiameterTypeCtrl, _itemsDiameterType, 'Diameter Type'):labelInput(''),
+          (_items.any((element) => element.values.contains('DiameterType')))
+              ? sFM(_DiameterTypeCtrl, _itemsDiameterType, 'Diameter Type')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('DrillType'))) ? sFM(_DrillTypeCtrl, _itemsDrillType, 'Drill Type'):labelInput(''),
+          (_items.any((element) => element.values.contains('DrillType')))
+              ? sFM(_DrillTypeCtrl, _itemsDrillType, 'Drill Type')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('CaseType'))) ? sFM(_CaseTypeCtrl, _itemsCaseType, 'Case Type'):labelInput(''),
+          (_items.any((element) => element.values.contains('CaseType')))
+              ? sFM(_CaseTypeCtrl, _itemsCaseType, 'Case Type')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('CaseDiameter'))) ? sFM(_CaseDiameterCtrl, _itemsCaseDiameter, 'Case Diameter'):labelInput(''),
+          (_items.any((element) => element.values.contains('CaseDiameter')))
+              ? sFM(_CaseDiameterCtrl, _itemsCaseDiameter, 'Case Diameter')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          (_items.any((element) => element.values.contains('Comments'))) ? labelInput('Comments'):labelInput(''),
+          (_items.any((element) => element.values.contains('Comments')))
+              ? labelInput('Comments')
+              : labelInput(''),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              child: Visibility(
-                visible: (_items.any((element) => element.values.contains('DIameterComment'))) ? true : false,
-                child: BsInput(
-                  maxLines: null,
-                  minLines: 4,
-                  keyboardType: TextInputType.multiline,
-                  style: BsInputStyle.outline,
-                  size: BsInputSize.md,
-                  hintText: 'Comments',
-                  controller: _Comments,
-                  prefixIcon: Icons.comment,
-                  onChange: (text) {
-                    setState(() {
-                      pageEvent(true);
-                    });
-                  },
-                ),
-              )
-            ),
+                child: Visibility(
+              visible: (_items.any(
+                      (element) => element.values.contains('DIameterComment')))
+                  ? true
+                  : false,
+              child: BsInput(
+                maxLines: null,
+                minLines: 4,
+                keyboardType: TextInputType.multiline,
+                style: BsInputStyle.outline,
+                size: BsInputSize.md,
+                hintText: 'Comments',
+                controller: _Comments,
+                prefixIcon: Icons.comment,
+                onChange: (text) {
+                  setState(() {
+                    pageEvent(true);
+                  });
+                },
+              ),
+            )),
           ),
           SizedBox(
             height: 20,
@@ -213,10 +234,12 @@ class DiameterTabState extends State<DiameterTab> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton.icon(
-                    onPressed: candado ?  null : () async {
-                      await insertDownholeSurvey();
-                      setState(() {});
-                    },
+                    onPressed: candado
+                        ? null
+                        : () async {
+                            await insertDownholeSurvey();
+                            setState(() {});
+                          },
                     style: ElevatedButton.styleFrom(
                         primary: DataEntryTheme.deOrangeDark,
                         alignment: Alignment.center),
@@ -274,58 +297,62 @@ class DiameterTabState extends State<DiameterTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 600,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'Start Depth',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 600,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'Start Depth',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Start Depth',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Start Depth',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Diameter Type',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Diameter Type',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Drill Type',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Drill Type',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Case Type',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Case Type',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Case Diameter',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Case Diameter',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Comments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Comments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -434,10 +461,10 @@ class DiameterTabState extends State<DiameterTab> {
           _EndDepthCtrl.text.isEmpty ? '0' : _EndDepthCtrl.text),
       'DiameterType': int.parse(
           _DiameterTypeCtrl.text.isEmpty ? '0' : _DiameterTypeCtrl.text),
-      'DrillType': int.tryParse(
-          _DrillTypeCtrl.text.isEmpty ? '0' : _DrillTypeCtrl.text),
-      'CaseType': int.tryParse(
-          _CaseTypeCtrl.text.isEmpty ? '0' : _CaseTypeCtrl.text),
+      'DrillType':
+          int.tryParse(_DrillTypeCtrl.text.isEmpty ? '0' : _DrillTypeCtrl.text),
+      'CaseType':
+          int.tryParse(_CaseTypeCtrl.text.isEmpty ? '0' : _CaseTypeCtrl.text),
       'CaseDiameter': int.tryParse(
           _CaseDiameterCtrl.text.isEmpty ? '0' : _CaseDiameterCtrl.text),
       'DIameterComment': _Comments.text,
@@ -658,9 +685,11 @@ class DiameterTabState extends State<DiameterTab> {
               Text('${model.comments}'),
             ),
           ],
-          onSelectChanged: candado ? null : (newValue) {
-            _getSelectedRowInfo(model);
-          },
+          onSelectChanged: candado
+              ? null
+              : (newValue) {
+                  _getSelectedRowInfo(model);
+                },
         ),
       );
     });

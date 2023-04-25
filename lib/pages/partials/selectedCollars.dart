@@ -132,25 +132,6 @@ class SelectedCollarsPageState extends State<SelectedCollarsPage> {
                       errorWidget(
                           context: context, mensaje: "No result found."),
                       SizedBox(height: 10.0),
-                      /*
-                      TextButton(
-                        style: TextButton.styleFrom(primary: Colors.green),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SincroCollarsPage()));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.cloud_download),
-                            SizedBox(width: 5.0),
-                            Text('Download Collars'),
-                          ],
-                        ),
-                      ),
-                      */
                     ],
                   )),
           ),

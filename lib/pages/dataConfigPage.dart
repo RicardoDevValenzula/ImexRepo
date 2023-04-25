@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cool_alert/cool_alert.dart';
 import 'package:data_entry_app/controllers/BackgroundController.dart';
 import 'package:data_entry_app/controllers/DBDataEntry.dart';
@@ -21,7 +23,9 @@ class DataConfigPage extends StatefulWidget {
 }
 
 class DataConfigPageState extends State<DataConfigPage> {
-  List<Map<String, dynamic>> _listASincronizar = [], _tablasFiltradas = [];
+  List<Map<String, dynamic>> _listASincronizar = [],
+      _tablasFiltradas = [],
+      _evidencesCollar = [];
   Map<String, bool> _selectedCollar = {};
   TextEditingController txtBuscarCtrl = TextEditingController();
   bool loading = true, conectado = true, checkAll = false, disabled = true;
@@ -35,6 +39,7 @@ class DataConfigPageState extends State<DataConfigPage> {
     super.initState();
     _listASincronizar = [];
     _tablasFiltradas = [];
+    _evidencesCollar = [];
     _selectedCollar = Map();
     countInsertTotal = 0;
     countUpdareTotal = 0;
@@ -54,35 +59,32 @@ class DataConfigPageState extends State<DataConfigPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:
-      Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: DataEntryTheme.deOrangeDark,
-              ),
-              onPressed: () {
-                //Navigator.pop(context);
-                //Navigator.of(context).maybePop();
-                Navigator.of(context, rootNavigator: true).pop(context);
-              },
-            ),
-            title: Text(
-              'SYNC UP',
-              style: TextStyle(
-                color: DataEntryTheme.deBrownDark,
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0,
-              ),
-            ),
-            actions: [
-              new EstatusConexionPage()
-            ],
+        child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: DataEntryTheme.deOrangeDark,
           ),
+          onPressed: () {
+            //Navigator.pop(context);
+            //Navigator.of(context).maybePop();
+            Navigator.of(context, rootNavigator: true).pop(context);
+          },
+        ),
+        title: Text(
+          'SYNC UP',
+          style: TextStyle(
+            color: DataEntryTheme.deBrownDark,
+            fontWeight: FontWeight.bold,
+            fontSize: 25.0,
+          ),
+        ),
+        actions: [new EstatusConexionPage()],
+      ),
       floatingActionButton: (_selectedCollar.isEmpty
           ? Container()
           : (disabled
@@ -130,8 +132,7 @@ class DataConfigPageState extends State<DataConfigPage> {
               : Container()),
         ),
       ),
-    )
-    );
+    ));
   }
 
   Widget fnCardTablaSincro(Map<String, dynamic> item) {
@@ -430,8 +431,7 @@ class DataConfigPageState extends State<DataConfigPage> {
             barrierDismissible: true,
             confirmBtnText: "Ok",
             onConfirmBtnTap: () async {
-
-              if(mounted){
+              if (mounted) {
                 Navigator.of(context, rootNavigator: true).pop();
               }
             });
@@ -443,24 +443,28 @@ class DataConfigPageState extends State<DataConfigPage> {
   }
 
   Future<List<Map<String, dynamic>>> fnObtenerListaBarrenosSincronizar() async {
-    List<Map<String, dynamic>> lstDatosSincro = [], lstTabs = [];
+    List<Map<String, dynamic>> lstDatosSincro = [], lstTabs = [], listEvi = [];
     String statusSync = [2, 3, 4, 5, 6].join(', ');
     try {
+      print('Hola eaa');
       // #OBTENER TODOS LOS BARRENOS LOCALES DESCRGADOS POR USUARIO.
       await new DBDataEntry().database.then((db) async {
+        print('aaa');
         lstDatosSincro = await db.query('tb_collar',
             where: 'status = ?',
             whereArgs: [1]).onError((error, stackTrace) => []);
         // #OBTENER LISTADO DE TABS.
         lstTabs = await db.query('tb_sincronizacion_local_app',
             where: 'estatus_id = ? AND tipo_tabla_id = ?', whereArgs: [1, 2]);
+        //# OBTENER TODOS LAS EVIDENCIAS
+        listEvi = await db.query('evidencias_local');
+        print(listEvi);
         // #RECORRER TODOS LOS BARRENOS LOCALES POR USUARIO.
         for (Map<String, dynamic> collar in lstDatosSincro) {
           List<Map<String, dynamic>> lstCollarTabs = [];
           for (Map<String, dynamic> tab in lstTabs) {
             String where = '';
             //List<dynamic> whereArg = [];
-
             switch (tab['nombre_tabla'].toLowerCase().trim()) {
               case 'tb_collar':
                 where = "HoleId = '" + collar['HoleId'] + "'";

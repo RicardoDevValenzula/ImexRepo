@@ -83,20 +83,6 @@ class _ExtendedImageExampleState extends State<ExtendedImageExample> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               AspectRatio(aspectRatio: 1, child: buildImage()),
-              /*Expanded(
-              child: SliderTheme(
-                data: const SliderThemeData(
-                  showValueIndicator: ShowValueIndicator.always,
-                ),
-                child: Column(
-                  children: <Widget>[
-                    _buildSat(),
-                    _buildBrightness(),
-                    _buildCon(),
-                  ],
-                ),
-              ),
-            ),*/
             ],
           ),
         ),
@@ -108,11 +94,7 @@ class _ExtendedImageExampleState extends State<ExtendedImageExample> {
   Widget buildImage() {
     return ExtendedImage(
       image: provider,
-      height: 400,
-      width: 400,
       extendedImageEditorKey: editorKey,
-      mode: ExtendedImageMode.editor,
-      fit: BoxFit.contain,
       initEditorConfigHandler: (_) => EditorConfig(
         /*maxScale: 8.0,
         cropRectPadding: const EdgeInsets.all(20.0),

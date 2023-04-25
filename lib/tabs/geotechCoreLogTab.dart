@@ -145,9 +145,12 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
       });
     });
 
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -155,7 +158,6 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
 
     fnCargarTabs();
     fnLlenarGeotechCoreLog(widget.holeId);
-
   }
 
   @override
@@ -296,11 +298,16 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('JoinSets') )) ? labelInput('JoinSets') : labelInput(''),
+          (_items.any((element) => element.values.contains('JoinSets')))
+              ? labelInput('JoinSets')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any(( element) => element.values.contains('JoinSets') )) ? true : false,
-              child:BsInput(
+              visible:
+                  (_items.any((element) => element.values.contains('JoinSets')))
+                      ? true
+                      : false,
+              child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
                 hintText: 'JoinSets',
@@ -313,18 +320,25 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Type') )) ? sFM(_TypeCtrl, _itemsTypes, 'Type'): labelInput(''),
+          (_items.any((element) => element.values.contains('Type')))
+              ? sFM(_TypeCtrl, _itemsTypes, 'Type')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Opening') )) ? labelInput('Opening'):labelInput(''),
+          (_items.any((element) => element.values.contains('Opening')))
+              ? labelInput('Opening')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any(( element) => element.values.contains('Opening') )) ? true : false,
-              child:BsInput(
+              visible:
+                  (_items.any((element) => element.values.contains('Opening')))
+                      ? true
+                      : false,
+              child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
                 hintText: 'Opening',
@@ -337,68 +351,96 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Roughness') )) ?  sFM(_RoughnessCtrl, _itemsRoughness, 'Roughness') : labelInput(''),
+          (_items.any((element) => element.values.contains('Roughness')))
+              ? sFM(_RoughnessCtrl, _itemsRoughness, 'Roughness')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('CementType') )) ? sFM(_CementTypeCtrl, _itemsCementType, 'Cement Type'): labelInput(''),
+          (_items.any((element) => element.values.contains('CementType')))
+              ? sFM(_CementTypeCtrl, _itemsCementType, 'Cement Type')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Location') )) ? labelInput('Location'):labelInput(''),
+          (_items.any((element) => element.values.contains('Location')))
+              ? labelInput('Location')
+              : labelInput(''),
           Container(
             child: Visibility(
-            visible: ( _items.any(( element) => element.values.contains('Location') )) ? true:false,
-              child:BsInput(
-              style: BsInputStyle.outlineRounded,
-              size: BsInputSize.md,
-              hintText: 'Location',
-              controller: _LocationCtrl,
-              prefixIcon: Icons.list_alt_rounded,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ( _items.any(( element) => element.values.contains('Alteration_Grade') )) ? sFM(_AlterationGradeCtrl, _itemsAlterationGrade, 'Alteration Grade'):labelInput(''),
-          SizedBox(
-            height: 10,
-          ),
-          ( _items.any(( element) => element.values.contains('Weathering') )) ? sFM(_WeatheringCtrl, _itemsWeathering, 'Weathering') : labelInput(''),
-          SizedBox(
-            height: 10,
-          ),
-          ( _items.any(( element) => element.values.contains('Rock_Strength') )) ? sFM(_RockStrengthCtrl, _itemsRockStrength, 'Rock Strength'):labelInput(''),
-          SizedBox(
-            height: 10,
-          ),
-          ( _items.any(( element) => element.values.contains('Hardness') )) ? sFM(_HardnessCtrl, _itemsHardness, 'Hardness'):labelInput(''),
-          SizedBox(
-            height: 10,
-          ),
-          ( _items.any(( element) => element.values.contains('Number_Structures') )) ? labelInput('Number Structure'):labelInput(''),
-          Container(
-            child: Visibility(
-              visible: ( _items.any(( element) => element.values.contains('Number_Structures') )) ? true:false,
-              child:BsInput(
+              visible:
+                  (_items.any((element) => element.values.contains('Location')))
+                      ? true
+                      : false,
+              child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
-                hintText: 'Number Structures',
-                controller: _NumberStructuresCtrl,
+                hintText: 'Location',
+                controller: _LocationCtrl,
                 prefixIcon: Icons.list_alt_rounded,
-                keyboardType: TextInputType.numberWithOptions(decimal: false),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
-            )
+            ),
           ),
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Alpha') )) ? labelInput('Alpha'):labelInput(''),
+          (_items.any((element) => element.values.contains('Alteration_Grade')))
+              ? sFM(_AlterationGradeCtrl, _itemsAlterationGrade,
+                  'Alteration Grade')
+              : labelInput(''),
+          SizedBox(
+            height: 10,
+          ),
+          (_items.any((element) => element.values.contains('Weathering')))
+              ? sFM(_WeatheringCtrl, _itemsWeathering, 'Weathering')
+              : labelInput(''),
+          SizedBox(
+            height: 10,
+          ),
+          (_items.any((element) => element.values.contains('Rock_Strength')))
+              ? sFM(_RockStrengthCtrl, _itemsRockStrength, 'Rock Strength')
+              : labelInput(''),
+          SizedBox(
+            height: 10,
+          ),
+          (_items.any((element) => element.values.contains('Hardness')))
+              ? sFM(_HardnessCtrl, _itemsHardness, 'Hardness')
+              : labelInput(''),
+          SizedBox(
+            height: 10,
+          ),
+          (_items.any(
+                  (element) => element.values.contains('Number_Structures')))
+              ? labelInput('Number Structure')
+              : labelInput(''),
+          Container(
+              child: Visibility(
+            visible: (_items.any(
+                    (element) => element.values.contains('Number_Structures')))
+                ? true
+                : false,
+            child: BsInput(
+              style: BsInputStyle.outlineRounded,
+              size: BsInputSize.md,
+              hintText: 'Number Structures',
+              controller: _NumberStructuresCtrl,
+              prefixIcon: Icons.list_alt_rounded,
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
+            ),
+          )),
+          SizedBox(
+            height: 10,
+          ),
+          (_items.any((element) => element.values.contains('Alpha')))
+              ? labelInput('Alpha')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any(( element) => element.values.contains('Alpha') )) ? true:false,
+              visible:
+                  (_items.any((element) => element.values.contains('Alpha')))
+                      ? true
+                      : false,
               child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
@@ -412,10 +454,15 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Beta') )) ? labelInput('Beta') : labelInput(''),
+          (_items.any((element) => element.values.contains('Beta')))
+              ? labelInput('Beta')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any(( element) => element.values.contains('Beta') )) ? true : false,
+              visible:
+                  (_items.any((element) => element.values.contains('Beta')))
+                      ? true
+                      : false,
               child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
@@ -429,29 +476,37 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('JCS') )) ? labelInput('JCS'):labelInput(''),
+          (_items.any((element) => element.values.contains('JCS')))
+              ? labelInput('JCS')
+              : labelInput(''),
           Container(
-            child:Visibility(
-              visible: ( _items.any(( element) => element.values.contains('JCS') )) ? true:false,
-              child: BsInput(
-                style: BsInputStyle.outlineRounded,
-                size: BsInputSize.md,
-                hintText: 'JCS',
-                controller: _JCSCtrl,
-                prefixIcon: Icons.list_alt_rounded,
-                keyboardType: TextInputType.numberWithOptions(decimal: false),
-              ),
-            )
-          ),
+              child: Visibility(
+            visible: (_items.any((element) => element.values.contains('JCS')))
+                ? true
+                : false,
+            child: BsInput(
+              style: BsInputStyle.outlineRounded,
+              size: BsInputSize.md,
+              hintText: 'JCS',
+              controller: _JCSCtrl,
+              prefixIcon: Icons.list_alt_rounded,
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
+            ),
+          )),
           SizedBox(
             height: 10,
           ),
-          ( _items.any(( element) => element.values.contains('Comments') )) ? labelInput('Comments') : labelInput(''),
+          (_items.any((element) => element.values.contains('Comments')))
+              ? labelInput('Comments')
+              : labelInput(''),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Visibility(
-                visible: ( _items.any(( element) => element.values.contains('Comments') )) ? true : false,
+                visible: (_items
+                        .any((element) => element.values.contains('Comments')))
+                    ? true
+                    : false,
                 child: BsInput(
                   maxLines: null,
                   minLines: 4,
@@ -539,118 +594,122 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 1200,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'GeolFrom',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 1200,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'GeolFrom',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'GeolTo',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'GeolTo',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'JoinSets',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'JoinSets',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Tye',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Tye',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Opening',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Opening',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Roughness',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Roughness',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Cement Type',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Cement Type',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Location',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Location',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Alteration Grade',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Alteration Grade',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Weathering',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Weathering',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Rock Strength',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Rock Strength',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Hardness',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Hardness',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Number Structures',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Number Structures',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Alpha',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Alpha',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Beta',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Beta',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'JCS',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'JCS',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Comments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Comments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -1111,7 +1170,8 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
     _GeolFromCtrl.text = '';
     _cells.clear();
     int currentRow = 0;
-    List<GeotechCoreLogModel> listStructureModel = await new GeotechCoreLogModel()
+    List<GeotechCoreLogModel> listStructureModel =
+        await new GeotechCoreLogModel()
             .fnObtenerRegistrosPorCollarId(
                 collarId: collarId, orderByCampo: 'GeolFrom')
             .then((value) => value);
@@ -1119,9 +1179,15 @@ class GeotechCoreLogTabState extends State<GeotechCoreLogTab> {
     log('${listStructureModel}');
     listStructureModel.forEach((model) {
       Color cell_color = Colors.black;
-      currentRow ++;
-      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo || double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
-        if(currentRow==1 && double.parse(model.geolFrom.toStringAsFixed(3)) == 0){cell_color = Colors.black;}else{cell_color = Colors.red;}
+      currentRow++;
+      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo ||
+          double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
+        if (currentRow == 1 &&
+            double.parse(model.geolFrom.toStringAsFixed(3)) == 0) {
+          cell_color = Colors.black;
+        } else {
+          cell_color = Colors.red;
+        }
       }
       _cells.add(
         DataRow(

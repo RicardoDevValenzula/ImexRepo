@@ -56,9 +56,12 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
 
   @override
   void initState() {
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -146,7 +149,7 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
               Expanded(
                 child: Column(
                   children: [
-                     labelInput('GeolTo'),
+                    labelInput('GeolTo'),
                     Container(
                       child: SizedBox(
                         height: 50,
@@ -195,8 +198,7 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
                                 }
                               }
                               setState(() {});
-                            }
-                            ),
+                            }),
                       ),
                     ),
                   ],
@@ -207,25 +209,34 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
           SizedBox(
             height: 10,
           ),
-          (_items.any((element)=>element.values.contains('LostFrom'))) ? labelInput('LostFrom') : labelInput(''),
+          (_items.any((element) => element.values.contains('LostFrom')))
+              ? labelInput('LostFrom')
+              : labelInput(''),
+          Container(
+              child: Visibility(
+            visible:
+                (_items.any((element) => element.values.contains('LostFrom')))
+                    ? true
+                    : false,
+            child: BsInput(
+              style: BsInputStyle.outlineRounded,
+              size: BsInputSize.md,
+              hintText: 'LostFrom',
+              controller: _LostFromCtrl,
+              prefixIcon: Icons.list_alt_rounded,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+            ),
+          )),
+          (_items.any((element) => element.values.contains('LostTo')))
+              ? labelInput('LostTo')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: (_items.any((element)=>element.values.contains('LostFrom'))) ? true:false,
-              child:BsInput(
-                style: BsInputStyle.outlineRounded,
-                size: BsInputSize.md,
-                hintText: 'LostFrom',
-                controller: _LostFromCtrl,
-                prefixIcon: Icons.list_alt_rounded,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-              ),
-            )
-          ),
-          (_items.any((element)=>element.values.contains('LostTo'))) ? labelInput('LostTo') : labelInput(''),
-          Container(
-            child: Visibility(
-              visible: (_items.any((element)=>element.values.contains('LostTo'))) ? true : false,
-              child:BsInput(
+              visible:
+                  (_items.any((element) => element.values.contains('LostTo')))
+                      ? true
+                      : false,
+              child: BsInput(
                 style: BsInputStyle.outlineRounded,
                 size: BsInputSize.md,
                 hintText: 'LostTo',
@@ -238,7 +249,9 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
           SizedBox(
             height: 20,
           ),
-          (_items.any((element)=>element.values.contains('Comments'))) ? labelInput('Comments'):labelInput(''),
+          (_items.any((element) => element.values.contains('Comments')))
+              ? labelInput('Comments')
+              : labelInput(''),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -264,10 +277,12 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton.icon(
-                    onPressed: candado ? null : () async {
-                      await insertGeotechLostCore();
-                      setState(() {});
-                    },
+                    onPressed: candado
+                        ? null
+                        : () async {
+                            await insertGeotechLostCore();
+                            setState(() {});
+                          },
                     style: ElevatedButton.styleFrom(
                         primary: DataEntryTheme.deOrangeDark,
                         alignment: Alignment.center),
@@ -325,47 +340,51 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 600,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'GeolFrom',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 600,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'GeolFrom',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'GeolTo',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'GeolTo',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'LostFrom',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'LostFrom',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'LostTo',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'LostTo',
+                      textAlign: TextAlign.center,
+                    ),
+                    numeric: true,
                   ),
-                  numeric: true,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Comments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Comments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -533,7 +552,7 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
       progressIndicator: widgetLoading(context),
       overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
     );
-   //valores['status_sync'] = 4;
+    //valores['status_sync'] = 4;
     int response = await _db.fnInsertarRegistro('tb_lostcore', valores);
     //print('Inside the register GeotechLostCore: ${response}');
     if (response > 0) {
@@ -745,9 +764,15 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
             .then((value) => value);
     listGeotechLostCoreModel.forEach((model) {
       Color cell_color = Colors.black;
-      currentRow ++;
-      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo || double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
-        if(currentRow==1 && double.parse(model.geolFrom.toStringAsFixed(3)) == 0){cell_color = Colors.black;}else{cell_color = Colors.red;}
+      currentRow++;
+      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo ||
+          double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
+        if (currentRow == 1 &&
+            double.parse(model.geolFrom.toStringAsFixed(3)) == 0) {
+          cell_color = Colors.black;
+        } else {
+          cell_color = Colors.red;
+        }
       }
       _cells.add(
         DataRow(
@@ -771,9 +796,11 @@ class GeoTechLostCoreTabState extends State<GeoTechLostCoreTab> {
               Text('${model.comments}'),
             ),
           ],
-          onSelectChanged: candado ? null: (newValue) {
-            _getSelectedRowInfo(model);
-          },
+          onSelectChanged: candado
+              ? null
+              : (newValue) {
+                  _getSelectedRowInfo(model);
+                },
         ),
       );
       //_lastGeolFrom = double.parse(model.geolFrom.toString());

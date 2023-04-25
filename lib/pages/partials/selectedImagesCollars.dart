@@ -177,8 +177,10 @@ class SelectedImagesCollarsPageState extends State<SelectedImagesCollarsPage> {
 
   Future<List<Map<String, dynamic>>> fnCargarImagenes() async {
     await _dbDataEntry.database.then((db) async {
-      listaCampos = await db.query(nameTableEvidenciasLocal);
+      listaCampos = await db.query(nameTableEvidenciasLocal,
+          where: "holeId = ?", whereArgs: [widget.holeId]);
     });
+
     listaCamposfiltrado = listaCampos;
     _seleccionItems.clear();
     setStateIfMounted(() {});
@@ -291,8 +293,11 @@ class SelectedImagesCollarsPageState extends State<SelectedImagesCollarsPage> {
   Future<bool> _openGallery(BuildContext context) async {
     lstUrlAdjuntos.clear();
     bool respuestas = false;
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: false);
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      type: FileType.image,
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
+    );
     Loader.show(
       context,
       isAppbarOverlay: true,

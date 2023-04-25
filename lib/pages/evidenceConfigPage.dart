@@ -4,6 +4,7 @@ import 'dart:math' as Math;
 import 'package:cool_alert/cool_alert.dart';
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:data_entry_app/controllers/DBDataEntry.dart';
+import 'package:data_entry_app/pages/partials/angles.dart';
 import 'package:data_entry_app/pages/partials/extendedImageExample.dart';
 import 'package:data_entry_app/pages/partials/selectedCollars.dart';
 import 'package:data_entry_app/pages/partials/selectedImagesCollars.dart';
@@ -11,9 +12,10 @@ import 'package:data_entry_app/themes/dataEntryTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
+import 'package:data_entry_app/pages/partials/perspective.dart';
+
 class EvidenceConfigPage extends StatefulWidget {
   EvidenceConfigPage({Key? key}) : super(key: key);
-
   @override
   _EvidenceConfigPageState createState() => _EvidenceConfigPageState();
 }
@@ -85,6 +87,22 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
               ],
             ),
           ),
+          TextButton(
+            onPressed: (activarBtnImagen
+                ? () async {
+                    await fnSeleccionarImagenesCargadas(_selectedHoleId);
+                  }
+                : null),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Icon(Icons.sync),
+                ),
+                Text('SYNC'),
+              ],
+            ),
+          ),
         ],
       ),
       body: Container(
@@ -101,68 +119,73 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
                         child: Center(
                           child: (_infoImageSelected['url'] == null
                               ? Icon(
-                            Icons.hide_image,
-                            size: (MediaQuery.of(context).size.height / 5),
-                            color: Colors.white,
-                          )
+                                  Icons.hide_image,
+                                  size:
+                                      (MediaQuery.of(context).size.height / 5),
+                                  color: Colors.white,
+                                )
                               : contenedorImagen),
                         ),
                       ),
                     ),
                     (activarToolsImagen
                         ? Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          color: Colors.transparent,
-                          child: TextButton(
-                            onPressed: () async {
-                              await fnRenombrarLaImagen(
-                                  imageLocalId, nameImageToHoleId);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(child: Text(nameImageToHoleId)),
-                                  Icon(Icons.drive_file_rename_outline)
-                                ],
-                              ),
-                            ),
-                            style: ButtonStyle(
-                              foregroundColor:
-                              MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                              backgroundColor:
-                              MaterialStateProperty.all<Color>(
-                                  DataEntryTheme.deOrangeDark),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  side: BorderSide(
-                                      color: DataEntryTheme.deOrangeLight),
-                                ),
-                              ),
-                            ),
-                          )),
-                    )
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 10.0),
+                                color: Colors.transparent,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    await fnRenombrarLaImagen(
+                                        imageLocalId, nameImageToHoleId);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                            child: Text(nameImageToHoleId)),
+                                        Icon(Icons.drive_file_rename_outline)
+                                      ],
+                                    ),
+                                  ),
+                                  style: ButtonStyle(
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.white),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            DataEntryTheme.deOrangeDark),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        side: BorderSide(
+                                            color:
+                                                DataEntryTheme.deOrangeLight),
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          )
                         : Container()),
                     (activarToolsImagen
                         ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [contenedorHerramentas],
-                          ),
-                        ),
-                      ),
-                    )
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [contenedorHerramentas],
+                                ),
+                              ),
+                            ),
+                          )
                         : Container()),
                   ],
                 ),
@@ -173,131 +196,6 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
       ),
       //bottomNavigationBar: contenedorHerramentas,
     );
-/*
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () async {
-                    await fnSeleccionarBarreno();
-                  },
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Icon(Icons.search),
-                      ),
-                      Text(_selectedHoleId),
-                    ],
-                  ),
-                ),
-                TextButton(
-                  onPressed: (activarBtnImagen
-                      ? () async {
-                          await fnSeleccionarImagenesCargadas(_selectedHoleId);
-                        }
-                      : null),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Icon(Icons.collections),
-                      ),
-                      Text('Images'),
-                    ],
-                  ),
-                ),
-                //IconButton(onPressed: () {}, icon: Icon(Icons.grading)),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.grey[400],
-              child: Stack(
-                children: [
-                  Container(
-                    color: Colors.transparent,
-                    child: Container(
-                      child: Center(
-                        child: (_infoImageSelected['url'] == null
-                            ? Icon(
-                                Icons.hide_image,
-                                size: (MediaQuery.of(context).size.height / 5),
-                                color: Colors.white,
-                              )
-                            : contenedorImagen),
-                      ),
-                    ),
-                  ),
-                  (activarToolsImagen
-                      ? Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 10.0),
-                              color: Colors.transparent,
-                              child: TextButton(
-                                onPressed: () async {
-                                  await fnRenombrarLaImagen(
-                                      imageLocalId, nameImageToHoleId);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Flexible(child: Text(nameImageToHoleId)),
-                                      Icon(Icons.drive_file_rename_outline)
-                                    ],
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          DataEntryTheme.deOrangeDark),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      side: BorderSide(
-                                          color: DataEntryTheme.deOrangeLight),
-                                    ),
-                                  ),
-                                ),
-                              )),
-                        )
-                      : Container()),
-                  (activarToolsImagen
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [contenedorHerramentas],
-                              ),
-                            ),
-                          ),
-                        )
-                      : Container()),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    */
   }
 
   Future<void> fnSeleccionarBarreno() async {
@@ -442,14 +340,18 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
   }
 
   Widget _buildCropImage(String imageFile) {
-    return Crop(
-      image: File(imageFile).readAsBytesSync(),
-      controller: _imageCropCtrl,
-      onCropped: (image) async {
-        File imageCrop = new File('${_infoImageSelected['url']}');
-        await imageCrop.writeAsBytes(image);
-        fnTipoVisualizacionImagen(TipoVisualizacionImagen.porDefecto);
-      },
+    return SizedBox(
+      //width: 200,
+      height: MediaQuery.of(context).size.height - 250,
+      child: Crop(
+        image: File(imageFile).readAsBytesSync(),
+        controller: _imageCropCtrl,
+        onCropped: (image) async {
+          File imageCrop = new File('${_infoImageSelected['url']}');
+          await imageCrop.writeAsBytes(image);
+          //fnTipoVisualizacionImagen(TipoVisualizacionImagen.porDefecto);
+        },
+      ),
     );
   }
 
@@ -463,27 +365,17 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
       switch (tipoVisualizacionImagen) {
         case TipoVisualizacionImagen.recortar:
           contenedorImagen = _buildCropImage('${_infoImageSelected['url']}');
-          contenedorHerramentas = fnHerramentasDefault();
+          contenedorHerramentas = fnHerramentasRecortar();
           break;
         case TipoVisualizacionImagen.flipH:
           contenedorImagen = fnFlipHImage('${_infoImageSelected['url']}');
-          // SAVE
-          showH = !showH;
-          break;
-        case TipoVisualizacionImagen.flipV:
-          contenedorImagen = fnFlipVImage('${_infoImageSelected['url']}');
-          showV = !showV;
           break;
         case TipoVisualizacionImagen.perspectiva:
           contenedorImagen = fnPerspectiva('${_infoImageSelected['url']}');
-          showPerspectiva = !showPerspectiva;
           break;
         default:
-          /*contenedorImagen =
-              ImagesContainer(urlFileImage: '${_infoImageSelected['url']}');*/
-          contenedorImagen = ExtendedImageExample(
-              urlFileImage: '${_infoImageSelected['url']}');
-            contenedorHerramentas = fnHerramentasDefault();
+          contenedorImagen = fnDefault('${_infoImageSelected['url']}');
+          contenedorHerramentas = fnHerramentasDefault();
           break;
       }
     } else {
@@ -519,25 +411,15 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
           },
           color: Colors.blue,
           textColor: Colors.white,
-          child: Icon(Icons.flip, size: 24),
+          child: Icon(Icons.rotate_right, size: 24),
           padding: EdgeInsets.all(16),
           shape: CircleBorder(),
         ),
         MaterialButton(
           elevation: 0,
           onPressed: () {
-            fnTipoVisualizacionImagen(TipoVisualizacionImagen.flipV);
+            fnTipoVisualizacionImagen(TipoVisualizacionImagen.perspectiva);
           },
-          color: Colors.blue,
-          textColor: Colors.white,
-          child: Transform.rotate(
-              angle: 90 * Math.pi / 180, child: Icon(Icons.flip, size: 24)),
-          padding: EdgeInsets.all(16),
-          shape: CircleBorder(),
-        ),
-        MaterialButton(
-          elevation: 0,
-          onPressed: () {},
           color: Colors.blue,
           textColor: Colors.white,
           child: Icon(Icons.details, size: 24),
@@ -566,7 +448,7 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
           onPressed: () {
             // #RECORRTAR Y GUARDAR IMAGEN NUEVA.
             _imageCropCtrl.crop();
-            //fnTipoVisualizacionImagen(TipoVisualizacionImagen.porDefecto);
+            fnTipoVisualizacionImagen(TipoVisualizacionImagen.porDefecto);
           },
           color: Colors.green,
           textColor: Colors.white,
@@ -609,35 +491,27 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
   bool showH = false;
 
   Widget fnFlipHImage(String urlFileImage) {
-    return Transform(
-      transform: Matrix4.rotationY((showH ? 0 : -2) * Math.pi / 2),
-      alignment: Alignment.center,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Container(
+              height: MediaQuery.of(context).size.height - 250,
+              alignment: Alignment.center,
+              child: Angles(
+                imageUrl: urlFileImage,
+              ),
+            ),
+          ),
+        );
+      },
       child: Container(
-        height: MediaQuery.of(context).size.height - 130,
+        height: MediaQuery.of(context).size.height - 250,
         alignment: Alignment.center,
-        child: Image(
-            image: Image.memory(
-          File(urlFileImage).readAsBytesSync(),
-          fit: BoxFit.fitHeight,
-        ).image),
-      ),
-    );
-  }
-
-  bool showV = false;
-
-  Widget fnFlipVImage(String urlFileImage) {
-    return Transform(
-      transform: Matrix4.rotationX((showV ? 0 : -2) * Math.pi / 2),
-      alignment: Alignment.center,
-      child: Container(
-        height: MediaQuery.of(context).size.height - 130,
-        alignment: Alignment.center,
-        child: Image(
-            image: Image.memory(
-          File(urlFileImage).readAsBytesSync(),
-          fit: BoxFit.fitHeight,
-        ).image),
+        child: Angles(
+          imageUrl: urlFileImage,
+        ),
       ),
     );
   }
@@ -645,17 +519,46 @@ class _EvidenceConfigPageState extends State<EvidenceConfigPage> {
   bool showPerspectiva = false;
 
   Widget fnPerspectiva(String urlFileImage) {
-    return Transform(
-      transform: Matrix4.rotationX((showPerspectiva ? 0 : -2) * Math.pi / 2),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Container(
+              height: MediaQuery.of(context).size.height - 250,
+              alignment: Alignment.center,
+              child: ImagePerspective(
+                imageUrl: urlFileImage,
+                nameImage: '',
+                buildContext: context,
+              ),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height - 250,
+        alignment: Alignment.center,
+        child: ImagePerspective(
+          imageUrl: urlFileImage,
+          nameImage: '',
+          buildContext: context,
+        ),
+      ),
+    );
+  }
+
+  Widget fnDefault(String urlFileImage) {
+    return Container(
       alignment: Alignment.center,
       child: Container(
-        height: MediaQuery.of(context).size.height - 130,
+        height: MediaQuery.of(context).size.height - 250,
         alignment: Alignment.center,
         child: Image(
             image: Image.memory(
-              File(urlFileImage).readAsBytesSync(),
-              fit: BoxFit.fitHeight,
-            ).image),
+          File(urlFileImage).readAsBytesSync(),
+          fit: BoxFit.fitHeight,
+        ).image),
       ),
     );
   }

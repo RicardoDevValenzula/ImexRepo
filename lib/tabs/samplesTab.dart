@@ -28,8 +28,8 @@ class SamplesTab extends StatefulWidget {
       required this.pageEvent,
       required this.holeId,
       required this.totalDepth,
-        required this.fechaInicio,
-        required this.fechaFinal})
+      required this.fechaInicio,
+      required this.fechaFinal})
       : super(key: key);
 
   @override
@@ -129,8 +129,7 @@ class SamplesTabState extends State<SamplesTab> {
       });
     });
     _db
-        .fnRegistrosValueGeolog(
-            tbName: 'cat_geologist', holeid: widget.holeId)
+        .fnRegistrosValueGeolog(tbName: 'cat_geologist', holeid: widget.holeId)
         .then((rows) {
       setState(() {
         _itemsSamplers = rows;
@@ -192,20 +191,27 @@ class SamplesTabState extends State<SamplesTab> {
         _itemsWaterSmell = rows;
       });
     });
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
         String fechaInicio = rows.values.elementAt(7) ?? '';
         String fechaFinal = rows.values.elementAt(8) ?? '';
 
-        if(rows.values.elementAt(7) != null || rows.values.elementAt(8)!=null){
+        if (rows.values.elementAt(7) != null ||
+            rows.values.elementAt(8) != null) {
           _dateStartCollar = fechaInicio;
           _dateEndCollar = fechaFinal;
         }
       });
     });
-    _db.fnObtenerRegistro(nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId).then((rows){
+    _db
+        .fnObtenerRegistro(
+            nombreTabla: 'tb_collar', campo: 'id', valor: widget.holeId)
+        .then((rows) {
       setState(() {
-        if(rows.values.elementAt(34) == 1){
+        if (rows.values.elementAt(34) == 1) {
           candado = true;
         }
       });
@@ -355,12 +361,13 @@ class SamplesTabState extends State<SamplesTab> {
           labelInput('SampleId'),
           Container(
             child: Visibility(
-              visible:  true ,
-                child: SizedBox(
+              visible: true,
+              child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerSampleId,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -388,7 +395,9 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any((element ) => element.values.contains('Aquifer'))) ? sFM(_controllerAquifer, _itemsAquifer, 'Aquifer') : labelInput(''),
+          (_items.any((element) => element.values.contains('Aquifer')))
+              ? sFM(_controllerAquifer, _itemsAquifer, 'Aquifer')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
@@ -396,33 +405,37 @@ class SamplesTabState extends State<SamplesTab> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               child: Visibility(
-                visible: ( _items.any((element ) => element.values.contains('Samp_Comments'))) ? true : false,
-                child: BsInput(
-                  maxLines: null,
-                  minLines: 4,
-                  keyboardType: TextInputType.multiline,
-                  style: BsInputStyle.outline,
-                  size: BsInputSize.md,
-                  hintText: 'Comments',
-                  controller: _controllerComments,
-                  prefixIcon: Icons.comment,
-                  onChange: (text) {
-                    setState(() {
-                      pageEvent(true);
-                    });
-                  },
-              )
-              ),
+                  visible: (_items.any((element) =>
+                          element.values.contains('Samp_Comments')))
+                      ? true
+                      : false,
+                  child: BsInput(
+                    maxLines: null,
+                    minLines: 4,
+                    keyboardType: TextInputType.multiline,
+                    style: BsInputStyle.outline,
+                    size: BsInputSize.md,
+                    hintText: 'Comments',
+                    controller: _controllerComments,
+                    prefixIcon: Icons.comment,
+                    onChange: (text) {
+                      setState(() {
+                        pageEvent(true);
+                      });
+                    },
+                  )),
             ),
           ),
           SizedBox(
             height: 10,
           ),
-          ( _items.any((element ) => element.values.contains('Lab'))) ?  sFM(_controllerLab, _itemsLab, 'Lab') : labelInput('') ,
+          (_items.any((element) => element.values.contains('Lab')))
+              ? sFM(_controllerLab, _itemsLab, 'Lab')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-           labelInput('Dispatch ID'),
+          labelInput('Dispatch ID'),
           Container(
             child: Visibility(
               visible: true,
@@ -440,7 +453,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Dispatch ID",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -461,75 +475,83 @@ class SamplesTabState extends State<SamplesTab> {
           ),
           labelInput('Dispatch Date'),
           Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey.withOpacity(0.3),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey.withOpacity(0.3),
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(100),
+                ),
               ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(100),
-              ),
-            ),
-            child: Visibility(
-              visible: true,
-              child: DateTimeField(
-                controller: _controllerDispatchDate,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.withOpacity(0.1)),
-                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                  ),
-                  contentPadding: EdgeInsets.all(15.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(100),
+              child: Visibility(
+                visible: true,
+                child: DateTimeField(
+                  controller: _controllerDispatchDate,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.withOpacity(0.1)),
+                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                    ),
+                    contentPadding: EdgeInsets.all(15.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(100),
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Dispatch Date',
+                    hintStyle: TextStyle(
+                        color: Colors.black.withOpacity(0.5), fontSize: 15),
+                    prefixIcon: Icon(
+                      Icons.calendar_today_rounded,
+                      color: Colors.black,
                     ),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Dispatch Date',
-                  hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5), fontSize: 15),
-                  prefixIcon: Icon(
-                    Icons.calendar_today_rounded,
-                    color: Colors.black,
-                  ),
+                  format: DateFormat("MM/dd/yyyy"),
+                  onShowPicker: (context, currentValue) {
+                    return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                  },
+                  onChanged: (date) {
+                    setState(() {
+                      _dateDispatchDate = date;
+
+                      pageEvent(true);
+                    });
+                  },
                 ),
-                format: DateFormat("MM/dd/yyyy"),
-                onShowPicker: (context, currentValue) {
-                  return showDatePicker(
-                    context: context,
-                    firstDate: DateTime(1900),
-                    initialDate: currentValue ?? DateTime.now(),
-                    lastDate: DateTime(2100),
-                  );
-                },
-                onChanged: (date) {
-                  setState(() {
-                    _dateDispatchDate = date;
-
-
-                    pageEvent(true);
-                  });
-                },
-              ),
-            )
-          ),
+              )),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element ) => element.values.contains('Drill_SampleType') ) ) ?  sFM(_controllerDrillSampType, _itemsDrillSampType, 'DrillSampType') : labelInput(''),
+          (_items.any((element) => element.values.contains('Drill_SampleType')))
+              ? sFM(_controllerDrillSampType, _itemsDrillSampType,
+                  'DrillSampType')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element ) => element.values.contains('Sample_Mass') ) ) ? labelInput('Sample_Mass') : labelInput(''),
+          (_items.any((element) => element.values.contains('Sample_Mass')))
+              ? labelInput('Sample_Mass')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element ) => element.values.contains('Sample_Mass') ) ) ? true : false,
-              child : SizedBox(
+              visible: (_items
+                      .any((element) => element.values.contains('Sample_Mass')))
+                  ? true
+                  : false,
+              child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerSampleMass,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -540,7 +562,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Sample_Mass",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -559,7 +582,9 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element ) => element.values.contains('Sampler') ) ) ? sFM(_controllerSampler, _itemsSamplers, 'Sampler') : labelInput(''),
+          (_items.any((element) => element.values.contains('Sampler')))
+              ? sFM(_controllerSampler, _itemsSamplers, 'Sampler')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
@@ -575,7 +600,7 @@ class SamplesTabState extends State<SamplesTab> {
             ),
             child: Visibility(
               visible: true,
-              child : DateTimeField(
+              child: DateTimeField(
                 controller: _controllerSampleDate,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -611,9 +636,7 @@ class SamplesTabState extends State<SamplesTab> {
                   setState(() {
                     _dateSampDate = date;
 
-
                     pageEvent(true);
-
                   });
                 },
               ),
@@ -622,43 +645,68 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterSampType'))) ? sFM(_controllerWaterSampType, _itemsWaterSampType, 'WaterSampType') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterSampType')))
+              ? sFM(_controllerWaterSampType, _itemsWaterSampType,
+                  'WaterSampType')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterContainer'))) ? sFM(_controllerWaterContainer, _itemsWaterContainer, 'WaterContainer') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterContainer')))
+              ? sFM(_controllerWaterContainer, _itemsWaterContainer,
+                  'WaterContainer')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterWellType'))) ? sFM(_controllerWaterWellType, _itemsWaterWellType, 'WaterWellType') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterWellType')))
+              ? sFM(_controllerWaterWellType, _itemsWaterWellType,
+                  'WaterWellType')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterSampEquip'))) ? sFM(_controllerWaterSampEquip, _itemsWaterSampEquip, 'WaterSampEquip') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterSampEquip')))
+              ? sFM(_controllerWaterSampEquip, _itemsWaterSampEquip,
+                  'WaterSampEquip')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterVolume'))) ? sFM(_controllerWaterVolume, _itemsWaterVolume, 'WaterVolume') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterVolume')))
+              ? sFM(_controllerWaterVolume, _itemsWaterVolume, 'WaterVolume')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterColor'))) ? sFM(_controllerWaterColor, _itemsWaterColor, 'WaterColor') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterColor')))
+              ? sFM(_controllerWaterColor, _itemsWaterColor, 'WaterColor')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('WaterSmell'))) ? sFM(_controllerWaterSmell, _itemsWaterSmell, 'WaterSmell') : labelInput(''),
+          (_items.any((element) => element.values.contains('WaterSmell')))
+              ? sFM(_controllerWaterSmell, _itemsWaterSmell, 'WaterSmell')
+              : labelInput(''),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('ConductivityField'))) ? labelInput('Conductivity') : labelInput(''),
+          (_items.any(
+                  (element) => element.values.contains('ConductivityField')))
+              ? labelInput('Conductivity')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('ConductivityField'))) ? true : false,
-             child: SizedBox(
+              visible: (_items.any((element) =>
+                      element.values.contains('ConductivityField')))
+                  ? true
+                  : false,
+              child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerConductivity,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -669,7 +717,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Conductivity",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -688,15 +737,21 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('TDS_Field'))) ? labelInput('TDS_Field') : labelInput('') ,
+          (_items.any((element) => element.values.contains('TDS_Field')))
+              ? labelInput('TDS_Field')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: (_items.any( (element) => element.values.contains('TDS_Field'))) ? true : false,
-                child: SizedBox(
+              visible: (_items
+                      .any((element) => element.values.contains('TDS_Field')))
+                  ? true
+                  : false,
+              child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerTDSField,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -707,7 +762,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "TDS_Field",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -726,15 +782,21 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Temp_Field'))) ? labelInput('Temp_Field') : labelInput('') ,
+          (_items.any((element) => element.values.contains('Temp_Field')))
+              ? labelInput('Temp_Field')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: (_items.any( (element) => element.values.contains('Temp_Field'))) ? true : false,
+              visible: (_items
+                      .any((element) => element.values.contains('Temp_Field')))
+                  ? true
+                  : false,
               child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerTempField,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -745,7 +807,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Temp_Field",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -760,20 +823,25 @@ class SamplesTabState extends State<SamplesTab> {
                     onChanged: (text) {}),
               ),
             ),
-
           ),
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('pH_Field'))) ? labelInput('pH_Field') : labelInput(''),
+          (_items.any((element) => element.values.contains('pH_Field')))
+              ? labelInput('pH_Field')
+              : labelInput(''),
           Container(
-            child:Visibility(
-              visible: ( _items.any( (element) => element.values.contains('pH_Field'))) ? true : false,
+            child: Visibility(
+              visible:
+                  (_items.any((element) => element.values.contains('pH_Field')))
+                      ? true
+                      : false,
               child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerPhField,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -784,7 +852,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "pH_Field",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -803,15 +872,21 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Eh_Field'))) ? labelInput('Eh_Field') : labelInput(''),
+          (_items.any((element) => element.values.contains('Eh_Field')))
+              ? labelInput('Eh_Field')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible : ( _items.any( (element) => element.values.contains('Eh_Field'))) ? true : false,
+              visible:
+                  (_items.any((element) => element.values.contains('Eh_Field')))
+                      ? true
+                      : false,
               child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerEhField,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -822,7 +897,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Eh_Field",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -841,15 +917,21 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('Density_Field'))) ? labelInput('Density_Field') : labelInput(''),
+          (_items.any((element) => element.values.contains('Density_Field')))
+              ? labelInput('Density_Field')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('Density_Field'))) ? true : false,
+              visible: (_items.any(
+                      (element) => element.values.contains('Density_Field')))
+                  ? true
+                  : false,
               child: SizedBox(
                 height: 50,
                 child: TextField(
                     controller: _controllerDensityField,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -860,7 +942,8 @@ class SamplesTabState extends State<SamplesTab> {
                       filled: true,
                       hintStyle: TextStyle(color: Colors.grey[800]),
                       hintText: "Density_Field",
-                      fillColor: (geolToDifference) ? Colors.red : Colors.white70,
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.grey.withOpacity(0.3), width: 2.1),
@@ -879,40 +962,46 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 10,
           ),
-          ( _items.any( (element) => element.values.contains('NaCl_Field'))) ? labelInput('NaCl_Field') : labelInput(''),
+          (_items.any((element) => element.values.contains('NaCl_Field')))
+              ? labelInput('NaCl_Field')
+              : labelInput(''),
           Container(
             child: Visibility(
-              visible: ( _items.any( (element) => element.values.contains('NaCl_Field'))) ? true : false,
-              child:
-              SizedBox(
+              visible: (_items
+                      .any((element) => element.values.contains('NaCl_Field')))
+                  ? true
+                  : false,
+              child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: _controllerNaClField,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  style: TextStyle(
-                    fontSize: 16.0,
-                  ),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(
-                        left: 14.0, right: 14.0, top: 14.0, bottom: 14.0),
-                    prefixIcon: Icon(Icons.label_important),
-                    filled: true,
-                    hintStyle: TextStyle(color: Colors.grey[800]),
-                    hintText: "NaCl_Field",
-                    fillColor: (geolToDifference) ? Colors.red : Colors.white70,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.3), width: 2.1),
-                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                    controller: _controllerNaClField,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    style: TextStyle(
+                      fontSize: 16.0,
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.grey.withOpacity(0.3), width: 1.0),
-                      borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(
+                          left: 14.0, right: 14.0, top: 14.0, bottom: 14.0),
+                      prefixIcon: Icon(Icons.label_important),
+                      filled: true,
+                      hintStyle: TextStyle(color: Colors.grey[800]),
+                      hintText: "NaCl_Field",
+                      fillColor:
+                          (geolToDifference) ? Colors.red : Colors.white70,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.3), width: 2.1),
+                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.3), width: 1.0),
+                        borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                      ),
                     ),
-                  ),
-                  onChanged: (text) {}),
-            ),
+                    onChanged: (text) {}),
+              ),
             ),
           ),
           SizedBox(
@@ -923,10 +1012,12 @@ class SamplesTabState extends State<SamplesTab> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton.icon(
-                    onPressed:candado ? null: () async {
-                      await insertSamples();
-                      setState(() {});
-                    },
+                    onPressed: candado
+                        ? null
+                        : () async {
+                            await insertSamples();
+                            setState(() {});
+                          },
                     style: ElevatedButton.styleFrom(
                         primary: DataEntryTheme.deOrangeDark,
                         alignment: Alignment.center),
@@ -984,172 +1075,176 @@ class SamplesTabState extends State<SamplesTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 4000,
-              columns: [
-                DataColumn2(
-                  label: Text(
-                    'GeolFrom',
-                    textAlign: TextAlign.center,
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 4000,
+                columns: [
+                  DataColumn2(
+                    label: Text(
+                      'GeolFrom',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'GeolTo',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'GeolTo',
+                      textAlign: TextAlign.center,
+                    ),
+                    size: ColumnSize.M,
                   ),
-                  size: ColumnSize.M,
-                ),
-                DataColumn2(
-                  label: Text(
-                    'SampleId',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'SampleId',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Aquifer',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Aquifer',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'SampComments',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'SampComments',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Lab',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Lab',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'DispatchID',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'DispatchID',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'DispatchDate',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'DispatchDate',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'DrillSampType',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'DrillSampType',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'SampMass',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'SampMass',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Sampler',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Sampler',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'SampDate',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'SampDate',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterSampType',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterSampType',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterContainer',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterContainer',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterWellType',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterWellType',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterSampEquip',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterSampEquip',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterVolume',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterVolume',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterColor',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterColor',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'WaterSmell',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'WaterSmell',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Conductivity_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Conductivity_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'TDS_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'TDS_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Temp_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Temp_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'pH_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'pH_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Eh_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Eh_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'Density_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'Density_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                DataColumn2(
-                  label: Text(
-                    'NaCl_Field',
-                    textAlign: TextAlign.center,
+                  DataColumn2(
+                    label: Text(
+                      'NaCl_Field',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-              ],
-              rows: _cells),
+                ],
+                rows: _cells),
+          )
         ],
       ),
     );
@@ -1280,8 +1375,8 @@ class SamplesTabState extends State<SamplesTab> {
       'Density_Field': _controllerDensityField.text,
       'NaCl_Field': _controllerNaClField.text,
       'status': 1
-      };
-      if (await validateRequired(valores)) {
+    };
+    if (await validateRequired(valores)) {
       Loader.show(
         context,
         isAppbarOverlay: true,
@@ -1290,7 +1385,7 @@ class SamplesTabState extends State<SamplesTab> {
         overlayColor: DataEntryTheme.deGrayMedium.withOpacity(0.7),
       );
       registerSamples(valores);
-      } else {
+    } else {
       if (errors != '') {
         Loader.hide();
         CoolAlert.show(
@@ -1409,9 +1504,10 @@ class SamplesTabState extends State<SamplesTab> {
 
   Future<dynamic> validateRequired(Map<String, Object?> valores) async {
     errors = '';
-    bool existe = await sampleModel.existeSample(valores['sampleId'].toString(), widget.holeId);
+    bool existe = await sampleModel.existeSample(
+        valores['sampleId'].toString(), widget.holeId);
 
-    if (existe){
+    if (existe) {
       Loader.hide();
       message(CoolAlertType.error, 'Incorrect Data', 'Sample ID is duplicate.');
       return false;
@@ -1475,30 +1571,29 @@ class SamplesTabState extends State<SamplesTab> {
             '", therefore you are overlapping values.\n';
       }
 
-      if(valores['Samp_Date'] != ''){
+      if (valores['Samp_Date'] != '') {
         DateTime dtStart = DateTime.parse(widget.fechaInicio);
         DateTime? dtEnd;
-        if(widget.fechaFinal == ''){
+        if (widget.fechaFinal == '') {
           dtEnd = DateTime.now();
-        }else{
+        } else {
           dtEnd = DateTime.parse(widget.fechaFinal);
         }
         DateTime dtLogged = DateTime.parse(valores['Samp_Date'].toString());
 
-        if(dtLogged.isBefore(dtStart)){
+        if (dtLogged.isBefore(dtStart)) {
           Loader.hide();
           message(CoolAlertType.error, 'Incorrect data',
               'The date is before the Date of the collar');
           return false;
         }
-        if(dtLogged.isAfter(dtEnd)){
+        if (dtLogged.isAfter(dtEnd)) {
           Loader.hide();
           message(CoolAlertType.error, 'Incorrect data',
               'The date is After the Date of the collar');
           return false;
         }
       }
-
     }
     if (errors != '') {
       return false;
@@ -1586,19 +1681,25 @@ class SamplesTabState extends State<SamplesTab> {
     log('${listSamplesModel}');
     listSamplesModel.forEach((model) {
       Color cell_color = Colors.black;
-      currentRow ++;
-      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo || double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
-        if(currentRow==1 && double.parse(model.geolFrom.toStringAsFixed(3)) == 0){cell_color = Colors.black;}else{cell_color = Colors.red;}
+      currentRow++;
+      if (double.parse(model.geolFrom.toStringAsFixed(3)) > _lastGeolTo ||
+          double.parse(model.geolFrom.toStringAsFixed(3)) < _lastGeolTo) {
+        if (currentRow == 1 &&
+            double.parse(model.geolFrom.toStringAsFixed(3)) == 0) {
+          cell_color = Colors.black;
+        } else {
+          cell_color = Colors.red;
+        }
       }
       //log(model.dispatchDate);
       String fechaDispatch = '';
 
-      if(model.dispatchDate=='null'){
+      if (model.dispatchDate == 'null') {
         //log('hola');
         fechaDispatch = '0000-00-00';
-      }else{
-        fechaDispatch = formatDate(DateTime.parse(model.dispatchDate), [mm, '/', dd, '/', yyyy]);
-
+      } else {
+        fechaDispatch = formatDate(
+            DateTime.parse(model.dispatchDate), [mm, '/', dd, '/', yyyy]);
       }
       _cells.add(
         DataRow(
@@ -1628,7 +1729,7 @@ class SamplesTabState extends State<SamplesTab> {
               Text('${model.disparchID}'),
             ),
             DataCell(
-              Text( fechaDispatch),
+              Text(fechaDispatch),
               /*Text(formatDate(DateTime.parse(model.dispatchDate),
                   [mm, '/', dd, '/', yyyy])),*/
             ),
@@ -1690,9 +1791,11 @@ class SamplesTabState extends State<SamplesTab> {
               Text('${model.naclField}'),
             ),
           ],
-          onSelectChanged: candado ? null : (newValue) {
-            _getSelectedRowInfo(model);
-          },
+          onSelectChanged: candado
+              ? null
+              : (newValue) {
+                  _getSelectedRowInfo(model);
+                },
         ),
       );
       //_lastGeolFrom = double.parse(model.geolFrom.toString());
@@ -1903,5 +2006,4 @@ class SamplesTabState extends State<SamplesTab> {
         String.fromCharCode(sample.codeUnitAt(sample.length - 1) + 1);
   */
   }
-
 }

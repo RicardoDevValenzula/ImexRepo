@@ -869,174 +869,178 @@ class MineralisationTabState extends State<MineralisationTab> {
           SizedBox(
             height: 5,
           ),
-          DataTable2(
-              showCheckboxColumn: false,
-              columnSpacing: 12,
-              horizontalMargin: 12,
-              minWidth: 5000,
-              columns: [
-                DataColumn2(
-                  label: Text('GeolFrom'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('GeolTo'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral_Comments'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('No_Qtz_Veins'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral1'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral1_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral1%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral2'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral2_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral2%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral3'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral3_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral3%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral4'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral4_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral4%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral5'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral5_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral5%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral6'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral6_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral6%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral7'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral7_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral7%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral8'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral8_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral8%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral9'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral9_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral9%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral10'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral10_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral10%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral11'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral11_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral11%'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral12'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral12_Style'),
-                  size: ColumnSize.L,
-                ),
-                DataColumn2(
-                  label: Text('Mineral12%'),
-                  size: ColumnSize.L,
-                ),
-              ],
-              rows: _cells),
+          Container(
+            width: 500,
+            height: 200,
+            child: DataTable2(
+                showCheckboxColumn: false,
+                columnSpacing: 12,
+                horizontalMargin: 12,
+                minWidth: 5000,
+                columns: [
+                  DataColumn2(
+                    label: Text('GeolFrom'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('GeolTo'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral_Comments'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('No_Qtz_Veins'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral1'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral1_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral1%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral2'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral2_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral2%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral3'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral3_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral3%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral4'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral4_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral4%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral5'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral5_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral5%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral6'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral6_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral6%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral7'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral7_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral7%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral8'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral8_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral8%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral9'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral9_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral9%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral10'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral10_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral10%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral11'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral11_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral11%'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral12'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral12_Style'),
+                    size: ColumnSize.L,
+                  ),
+                  DataColumn2(
+                    label: Text('Mineral12%'),
+                    size: ColumnSize.L,
+                  ),
+                ],
+                rows: _cells),
+          ),
         ],
       ),
     );
@@ -1494,13 +1498,16 @@ class MineralisationTabState extends State<MineralisationTab> {
           mineralPercent + double.parse(valores['Mineral6_Percent'].toString());
     }
     if (isNumeric(valores['Mineral7_Percent'].toString())) {
-      mineralPercent = mineralPercent + double.parse(valores['Mineral7_Percent'].toString());
+      mineralPercent =
+          mineralPercent + double.parse(valores['Mineral7_Percent'].toString());
     }
     if (isNumeric(valores['Mineral8_Percent'].toString())) {
-      mineralPercent = mineralPercent + double.parse(valores['Mineral8_Percent'].toString());
+      mineralPercent =
+          mineralPercent + double.parse(valores['Mineral8_Percent'].toString());
     }
     if (isNumeric(valores['Mineral9_Percent'].toString())) {
-      mineralPercent = mineralPercent + double.parse(valores['Mineral9_Percent'].toString());
+      mineralPercent =
+          mineralPercent + double.parse(valores['Mineral9_Percent'].toString());
     }
     if (isNumeric(valores['Mineral10_Percent'].toString())) {
       mineralPercent = mineralPercent +
@@ -1557,7 +1564,6 @@ class MineralisationTabState extends State<MineralisationTab> {
                 '", so there is a difference.\n';
           }
            */
-
         }
 
         if (double.parse(valores['GeolFrom'].toString()) <

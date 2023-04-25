@@ -120,20 +120,20 @@ class HomePageState extends State<HomePage> {
               ),
               actions: [
                 new EstatusConexionPage(),
-              IconButton(onPressed: (){
-                contentPage = EnumPages.sync_up;
-                setState(() {
-                  title = fnTituloPage(contentPage);
-                });
-              }, icon: Icon(Icons.published_with_changes, color: DataEntryTheme.deBrownDark), )
+                IconButton(
+                  onPressed: () {
+                    contentPage = EnumPages.sync_up;
+                    setState(() {
+                      title = fnTituloPage(contentPage);
+                    });
+                  },
+                  icon: Icon(Icons.published_with_changes,
+                      color: DataEntryTheme.deBrownDark),
+                )
               ],
-
             ),
             //extendBodyBehindAppBar: true,
-            body:
-            Container(
-                child: contentPagesShow(contentPage)
-            ),
+            body: Container(child: contentPagesShow(contentPage)),
           ),
         ),
       ),
@@ -272,8 +272,9 @@ class HomePageState extends State<HomePage> {
                     });
                      */
                     Navigator.push(
-                        context
-                        , MaterialPageRoute(builder: (context) => DataConfigPage()));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DataConfigPage()));
                   },
                   leading: Icon(Icons.published_with_changes,
                       size: 20.0, color: Colors.white),
